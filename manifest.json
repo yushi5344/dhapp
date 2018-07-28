@@ -1,4 +1,4 @@
-﻿{
+{
     "@platforms": ["android", "iPhone", "iPad"],
     "id": "H5D253C83",/*应用的标识，创建应用时自动生成，勿手动修改*/
     "name": "dhapp",/*应用名称，程序桌面图标名称*/
@@ -135,5 +135,41 @@
                 }
             }
         }
-    }
+    },
+	"dependencies": {
+		"pages": {
+			"index.html": {
+				"resources": [],
+				"refer": [
+					"view/setting.html",
+					"view/login.html"
+				],
+				"priority": 0
+			},
+			"view/setting.html": {
+				"resources": [],
+				"refer": [
+					"view/login.html"
+				],
+				"priority": 0
+			},
+			"view/login.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"js/app.js",
+				"css/mui.min.css",
+				"css/style.css",
+				"js/mui.js",
+				"config.js",
+				"README.md"
+			]
+		}
+	}
 }
