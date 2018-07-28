@@ -24,10 +24,12 @@ var logout=function(){
 	var data=request('POST',arr,config.apimethod.logout);
 }
 var request=function(type,params,method){
+	var result;
 	mui.ajax({
 		url:config.server,
 		type:type,
 		dataType:'json',
+		async : false,
 		data:{
 			params:params,
 			method:method
@@ -37,13 +39,14 @@ var request=function(type,params,method){
 			if(data.success==false){
 				mui.alert(data.msg);
 			}else{
-				return data;
+				result=data;
 			}
 		},
 		error:function(xhr,type,errorThrown){
 			console.log(xhr);
 		}
 	});
+	return result;
 }
 var createState = function(name, callback) {
 	var state = getState();
@@ -59,3 +62,15 @@ var setState = function(state) {
 	state = state || {};
 	localStorage.setItem('$state', JSON.stringify(state));
 };
+//获取面料仓库列表
+var getMlCangku=function(){
+	var arr={'token':config.token};
+	var data=request('POST',arr,config.apimethod.getMlCangku);
+	return data.params;
+}
+//获取指定仓库对应的库区
+var getMlKuwei=function(cangkuId){
+	var arr={'token':config.token,cangkuId:cangkuId};
+	var data=request('POST',arr,config.apimethod.getMlKuwei);
+	return data.params;
+}
