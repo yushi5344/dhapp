@@ -12,6 +12,9 @@ var login=function(loginInfo, callback){
 	//开始登录
 	var arr={'userName':loginInfo.account,'passwd':loginInfo.password,'token':config.token};
 	var data=request('POST',arr,config.apimethod.login);
+	if(!data.success){
+		return false;
+	}
 	mui.toast('登录成功');
 	setTimeout(function(){
 		return createState(loginInfo.account, callback);
@@ -38,6 +41,7 @@ var request=function(type,params,method){
 			console.log(JSON.stringify(data));
 			if(data.success==false){
 				mui.alert(data.msg);
+				result=data;
 			}else{
 				result=data;
 			}
