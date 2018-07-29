@@ -10,5 +10,6 @@ var config = {
 		getMlCangku:'Cangku.getMlCangku',//面料仓库列表
 		getMlKuwei:'Cangku.getMlKuwei',//所选仓库对应的库位
 		getMlData:'Cangku.getMlData',//通过条码值获取布卷信息
+		checkSaveByJuan:'Cangku.checkSaveByJuan',//面料按卷入库
 	}
 }
