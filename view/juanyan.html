@@ -13,6 +13,9 @@
 				font-size: 14px;
 				color: #8f8f94;
 			}
+			.rukumingxi{
+				margin: 1rem 0 1rem 0.9rem;
+			}
 			
 		</style>
 	</head>
@@ -43,8 +46,21 @@
 			    </div>
 			    <div class="mui-input-row">
 			    	<label for="">入库信息</label>
-			    	<textarea name="" rows="5" cols=""></textarea>
 			    </div>
+			    <div id="rukuData">
+			    	 <div class="mui-input-row rukumingxi">
+			    		缸号:6417-5-1-1,数量:333,重量:444,卷数:33
+			    	 </div>
+			    	 <div class="mui-input-row rukumingxi">
+			    		缸号:6417-5-1-2,数量:333,重量:444,卷数:33
+			    	 </div>
+
+			    	 <div class="mui-input-row rukumingxi">
+			    		缸号:6417-5-1-3,数量:333,重量:444,卷数:33
+			    	 </div>
+
+			    </div>
+			   
 			    <div class="mui-button-row">
 			        <button type="button" class="mui-btn mui-btn-primary" >确认入库</button>
 			    </div>
@@ -54,6 +70,7 @@
 		<script src="../js/mui.js"></script>
 		<script type="text/javascript" src="../js/mui.picker.js"></script>
 		<script type="text/javascript" src="../js/mui.poppicker.js"></script>
+		<script src="../js/scaner.js"></script>
 		<script src="../js/app.js"></script>
 		<script>
 			mui.init();
@@ -80,6 +97,27 @@
 	        
 			mui.plusReady(function(){
 				
+				plus.key.addEventListener('keydown',function(e){
+					console.log("keydown: "+e.keyCode);
+					if(e.keyCode==224){
+						plus.Scaner.ScanCode("Hello World",
+			             function( result ) {
+			             	mui.alert( result );
+			             },
+			             function(result){
+			             	alert(result)
+			             });
+					}
+				},false);
+//				plus.key.addEventListener('keyup',function(e){
+//					console.log("keyup: "+e.keyCode);
+//				},false);
+//				plus.key.addEventListener('longpressed',function(e){
+//					console.log("longpressed: "+e.keyCode);
+//				},false);
+//				plus.key.addEventListener('menubutton',function(e){
+//					console.log("menubutton: "+e.keyCode);
+//				},false);
 			});
 		</script>
 	</body>
