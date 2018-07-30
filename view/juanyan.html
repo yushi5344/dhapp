@@ -43,7 +43,11 @@
 			        <label>库位</label>
 			        <input type="text" class="mui-input-clear" id="kuquIds" placeholder="请选择库位" readonly="readonly">
 			        <input type="hidden" name="kuquId" id="kuquId" />
-			        <input type="hidden" name="juanhao" id="juanhao" value=""/>
+			        <input type="hidden" name="juanhao" id="juanhao" value="13137-1,13137-4,13137-21,13137-24,"/>
+			    </div>
+			    <div class="mui-input-row">
+			    	<label>备注</label>
+			    	<input type="text" class="mui-input-clear" name="memo" id="memo">
 			    </div>
 			    <div class="mui-input-row">
 			    	<label for="">入库信息</label>
@@ -91,13 +95,13 @@
 	         	var kuweiId=document.getElementById('kuweiId').value;
 	         	var kuquId=document.getElementById('kuquId').value;
 	         	var juanhao=document.getElementById('juanhao').value;
-	         	var submitinfo={rukuDate:rukuDate,kuweiId:kuweiId,kuquId:kuquId,juanhao:juanhao};
+	         	var memo=document.getElementById('memo').value;
+	         	var submitinfo={rukuDate:rukuDate,kuweiId:kuweiId,kuquId:kuquId,juanhao:juanhao,memo:memo};
 	         	checkSaveByJuan(submitinfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);
 						return;
 					}
-					
 				});
 	         });
 			mui.plusReady(function(){	

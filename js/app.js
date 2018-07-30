@@ -101,15 +101,21 @@ var checkSaveByJuan=function(submitinfo,callback){
 	if (submitinfo.juanhao.length =='') {
 		return callback('请扫描布卷');
 	}
+	var state = getState();
+	var creater=state.account;
 	var arr={
 		'rukuDate':submitinfo.rukuDate,
 		'kuweiId':submitinfo.kuweiId,
 		'kuquId':submitinfo.kuquId,
 		'juanhao':submitinfo.juanhao,
+		'memo':submitinfo.memo,
+		'creater':creater,
 		'token':config.token
 	};
 	var data=request('POST',arr,config.apimethod.checkSaveByJuan);
 	if(!data.success){
 		return false;
 	}
+	mui.toast(data.msg);
+	location.reload();
 }
