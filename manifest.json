@@ -143,7 +143,8 @@
 				"refer": [
 					"view/setting.html",
 					"view/login.html",
-					"view/juanyan.html"
+					"view/juanyan.html",
+					"view/BDlistAdd.html"
 				],
 				"priority": 0
 			},
@@ -165,6 +166,14 @@
 				"resources": [],
 				"refer": [
 					"index.html"
+				],
+				"priority": 0
+			},
+			"view/BDlistAdd.html": {
+				"resources": [],
+				"refer": [
+					"index.html",
+					"view/confirmChu.html"
 				],
 				"priority": 0
 			}

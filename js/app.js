@@ -52,6 +52,29 @@ var request=function(type,params,method){
 	});
 	return result;
 }
+var requestByGet=function(params){
+	var result;
+	mui.ajax({
+		url:config.server,
+		type:'GET',
+		dataType:'json',
+		async : false,
+		data:params,
+		success:function(data){
+			console.log(JSON.stringify(data));
+			if(data.success==false){
+				mui.alert(data.msg);
+				result=data;
+			}else{
+				result=data;
+			}
+		},
+		error:function(xhr,type,errorThrown){
+			console.log(xhr);
+		}
+	});
+	return result;
+}
 var createState = function(name, callback) {
 	var state = getState();
 	state.account = name;
@@ -118,4 +141,16 @@ var checkSaveByJuan=function(submitinfo,callback){
 	}
 	mui.toast(data.msg);
 	location.reload();
+}
+//BD单领用登记列表
+var bdListAdd=function(page,searchKey){
+	var arr={
+		pageSize:config.pagesize,
+		page:page,
+		token:config.token,
+		key:searchKey,
+		method:config.apimethod.bdListAdd
+	};
+	var data=requestByGet(arr);
+	return data;
 }
