@@ -71,11 +71,13 @@
 					id: 'confirmChu'
 				});
 				mui('.mui-table-view').on('tap', 'li', function() {
-					var id = this.getAttribute('id');
-					var orderId = this.getAttribute('orderId');
+					var productId = this.getAttribute('productId');
+					var planId = this.getAttribute('planId');
+					var orderCode = this.getAttribute('orderCode');
 					mui.fire(replodpage, 'comfirmPage', {
-						id:id,
-						orderId:orderId
+						productId:productId,
+						planId:planId,
+						orderCode:orderCode
 					});
 					mui.openWindow({
 						id: 'confirmChu'
@@ -97,7 +99,7 @@
 				if(searchKey!=''){
 					var str = '';
 					mui.each(data.params.data, function(index, item) {
-						str += '<li class="mui-table-view-cell  mui-media" id="'+item.id+'" orderId="'+item.orderId+'">';
+						str += '<li class="mui-table-view-cell  mui-media" planId="'+item.planId+'" productId="'+item.productId+'" orderCode="'+orderCode+'">';
 						str += '<div class="mui-media-body" style="color:red;">';
 						str += ' ' + item.orderCode + ' <p class="mui-ellipsis">' + item.productId + ' 　需求量：   　' + item.cnt + ' </p>';
 						str += '</div></li>'
@@ -111,8 +113,9 @@
 						str += '</div>'
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell  mui-media';
-						li.setAttribute('id', item.id);
-						li.setAttribute('orderId', item.orderId);
+						li.setAttribute('productId', item.productId);
+						li.setAttribute('planId', item.planId);
+						li.setAttribute('orderCode', item.orderCode);
 						li.innerHTML = str;
 						table.appendChild(li);
 					});

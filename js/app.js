@@ -52,11 +52,11 @@ var request=function(type,params,method){
 	});
 	return result;
 }
-var requestByGet=function(params){
+var requestData=function(type,params){
 	var result;
 	mui.ajax({
 		url:config.server,
-		type:'GET',
+		type:type,
 		dataType:'json',
 		async : false,
 		data:params,
@@ -151,6 +151,47 @@ var bdListAdd=function(page,searchKey){
 		key:searchKey,
 		method:config.apimethod.bdListAdd
 	};
-	var data=requestByGet(arr);
+	var data=requestData('GET',arr);
 	return data;
+}
+var getMlDataChu=function(codeId){
+	var arr={
+		codeId:codeId,
+		token:config.token
+	};
+	var data=request('POST',arr,config.apimethod.getMlDataChu);
+	if(!data.success){
+		return;
+	}
+	return data.params;
+}
+var BDChukuSaveByJuan=function(submitInfo,callback){
+	console.log(JSON.stringify(submitInfo));
+	if (submitInfo.chukuDate.length =='') {
+		return callback('请选择出库日期');
+	}
+	if (submitInfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitInfo.juanhao.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+	var creater=state.account;
+	var arr={
+		'chukuDate':submitInfo.chukuDate,
+		'kuweiId':submitInfo.kuweiId,
+		'planId':submitInfo.planId,
+		'productId':submitInfo.productId,
+		'juanhao':submitInfo.juanhao,
+		'memo':submitInfo.memo,
+		'creater':creater,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.BDChukuSaveByJuan);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+	mui.back();
 }
