@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<style>
+		
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+			<h1 class="mui-title">布卷信息</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" >条码： <span id="code"></span></li>
+				<li class="mui-table-view-cell" >单号：<span id="orderCode"></span> </li>
+				<li class="mui-table-view-cell" >缸号： <span id="ganghao"></span></li>
+				<li class="mui-table-view-cell" >色号： <span id="color"></span></li>
+				<li class="mui-table-view-cell" >编码：<span id="productId"></span></li>
+				<li class="mui-table-view-cell" >检验日期：<span id="checkTime"></span> </li>
+			</ul>
+		</div>
+		<script src="../config.js"></script>
+		<script src="../js/mui.js"></script>
+		<script src="../js/scaner.js"></script>
+		<script type="text/javascript" src="../js/jquery.1.9.1.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function(){	
+				plus.key.addEventListener('keydown',function(e){
+					console.log("keydown: "+e.keyCode);
+					if(e.keyCode==224){
+						var result='13137-2';
+						var data=getMlData(result);
+			            doCodeData(data);
+					}
+					if(e.keyCode==4){
+						mui.back();
+					}
+				},false);
+				
+			});
+			function doCodeData(data){
+				console.log(JSON.stringify(data));
+				document.getElementById('code').innerHTML=data.code;
+				document.getElementById('orderCode').innerHTML=data.orderCode;
+				document.getElementById('ganghao').innerHTML=data.c5;
+				document.getElementById('color').innerHTML=data.color;
+				document.getElementById('productId').innerHTML=data.productId;
+				document.getElementById('checkTime').innerHTML=data.checkTime;
+			}
+			function getCode()
+	        {
+	            return  plus.Scaner.getCode("");
+	        }
+		</script>
+	</body>
+
+</html>

@@ -195,3 +195,12 @@ var BDChukuSaveByJuan=function(submitInfo,callback){
 	mui.toast(data.msg);
 	mui.back();
 }
+//通过条码值获取布卷信息
+var getClothInfo=function(codeId){
+	var arr={'token':config.token,codeId:codeId};
+	var data=request('POST',arr,config.apimethod.getClothInfo);
+	if(!data.success){
+		return false;
+	}
+	return data.params;
+}

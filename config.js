@@ -14,5 +14,6 @@ var config = {
 		bdListAdd:'Cangku.bdListAdd',//BD单领用登记列表
 		getMlDataChu:'Cangku.getMlDataChu',//通过卷号获取出库布卷信息
 		BDChukuSaveByJuan:'Cangku.BDChukuSaveByJuan',//BD单领用出库--按卷
+		getClothInfo:'Cangku.getClothInfo',//通过卷号获取布卷信息
 	}
 }
