@@ -144,7 +144,9 @@
 					"view/setting.html",
 					"view/login.html",
 					"view/juanyan.html",
-					"view/BDlistAdd.html"
+					"view/BDlistAdd.html",
+					"view/AClistAdd.html",
+					"view/buInfo.html"
 				],
 				"priority": 0
 			},
@@ -174,6 +176,22 @@
 				"refer": [
 					"index.html",
 					"view/confirmChu.html"
+				],
+				"priority": 0
+			},
+			"view/AClistAdd.html": {
+				"resources": [],
+				"refer": [
+					"view/confirmChu.html",
+					"index.html",
+					"view/confirmChuAC.html"
+				],
+				"priority": 0
+			},
+			"view/buInfo.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
 				],
 				"priority": 0
 			}

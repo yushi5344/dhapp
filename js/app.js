@@ -204,3 +204,52 @@ var getClothInfo=function(codeId){
 	}
 	return data.params;
 }
+//AC单领用登记列表
+var acListAdd=function(page,searchKey){
+	var arr={
+		pageSize:config.pagesize,
+		page:page,
+		token:config.token,
+		key:searchKey,
+		method:config.apimethod.acListAdd
+	};
+	var data=requestData('GET',arr);
+	return data;
+}
+//染厂加工户列表
+var suppierRc=function(){
+	var arr={'token':config.token};
+	var data=request('POST',arr,config.apimethod.suppierRc);
+	return data.params;
+}
+var ACChukuSaveByJuan=function(submitInfo,callback){
+	console.log(JSON.stringify(submitInfo));
+	if (submitInfo.chukuDate.length =='') {
+		return callback('请选择出库日期');
+	}
+	if (submitInfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitInfo.juanhao.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+	var creater=state.account;
+	var arr={
+		'chukuDate':submitInfo.chukuDate,
+		'kuweiId':submitInfo.kuweiId,
+		'kuweiIdru':submitInfo.kuweiIdru,
+		'planId':submitInfo.planId,
+		'productId':submitInfo.productId,
+		'juanhao':submitInfo.juanhao,
+		'memo':submitInfo.memo,
+		'creater':creater,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.ACChukuSaveByJuan);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+	mui.back();
+}
