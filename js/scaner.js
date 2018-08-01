@@ -4,41 +4,14 @@ document.addEventListener( "plusready",  function()
 		B = window.plus.bridge;
     var Scaner =
     {
-    	PluginTestFunction : function (Argus, successCallback, errorCallback )
-		{
-			var success = typeof successCallback !== 'function' ? null : function(args)
-			{
-				successCallback(args);
-			},
-			fail = typeof errorCallback !== 'function' ? null : function(code)
-			{
-				errorCallback(code);
-			};
-			callbackID = B.callbackId(success, fail);
-
-			return B.exec(_BARCODE, "PluginTestFunction", [callbackID, Argus]);
-		},
-		PluginTestFunctionArrayArgu : function (Argus, successCallback, errorCallback )
-		{
-			var success = typeof successCallback !== 'function' ? null : function(args)
-			{
-				successCallback(args);
-			},
-			fail = typeof errorCallback !== 'function' ? null : function(code)
-			{
-				errorCallback(code);
-			};
-			callbackID = B.callbackId(success, fail);
-			return B.exec(_BARCODE, "PluginTestFunctionArrayArgu", [callbackID, Argus]);
-		},
-        PluginTestFunctionSync : function (Argus1, Argus2, Argus3, Argus4)
+        getCode : function (Argus)
         {
-            return B.execSync(_BARCODE, "PluginTestFunctionSync", [Argus1, Argus2, Argus3, Argus4]);
+            return B.execSync(_BARCODE, "getCode", [Argus]);
         },
-        PluginTestFunctionSyncArrayArgu : function (Argus)
+        initMe : function (Argus)
         {
-            return B.execSync(_BARCODE, "PluginTestFunctionSyncArrayArgu", [Argus]);
-        }
+            return B.execSync(_BARCODE, "initMe", [Argus]);
+        },
     };
     window.plus.Scaner = Scaner;
 }, true );

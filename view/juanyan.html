@@ -16,7 +16,6 @@
 			.rukumingxi{
 				margin: 1rem 0 1rem 0.9rem;
 			}
-			
 		</style>
 	</head>
 
@@ -43,21 +42,20 @@
 			        <label>库位</label>
 			        <input type="text" class="mui-input-clear" id="kuquIds" placeholder="请选择库位" readonly="readonly">
 			        <input type="hidden" name="kuquId" id="kuquId" />
-			        <input type="hidden" name="juanhao" id="juanhao" value="13137-1,13137-4,13137-21,13137-24,"/>
+					<input type="hidden" name="juanhao" id="juanhao" value=""/>
 			    </div>
+				<div class="mui-input-row">
+					<label>备注</label>
+					<input type="text" class="mui-input-clear" name="memo" id="memo">
+				</div>
 			    <div class="mui-input-row">
-			    	<label>备注</label>
-			    	<input type="text" class="mui-input-clear" name="memo" id="memo">
+			    	<label>入库信息</label>
 			    </div>
-			    <div class="mui-input-row">
-			    	<label for="">入库信息</label>
-			    </div>
-			    <div id="rukuData">
-			    	 
-			    </div>
-			   
+				<div id="rukuData">
+
+				</div>
 			    <div class="mui-button-row">
-			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认入库</button>
+			        <button type="button" class="mui-btn mui-btn-primary" id="submit">确认入库</button>
 			    </div>
 			</form>
 		</div>
@@ -90,44 +88,36 @@
 	            	document.getElementById('kuquId').value=items[0].id;
 	          	});
 	        });
-	         document.querySelector("#submit").addEventListener("tap",function(){
-	         	var rukuDate=document.getElementById('rukuDate').value;
-	         	var kuweiId=document.getElementById('kuweiId').value;
-	         	var kuquId=document.getElementById('kuquId').value;
-	         	var juanhao=document.getElementById('juanhao').value;
-	         	var memo=document.getElementById('memo').value;
+			 document.querySelector("#submit").addEventListener("tap",function(){
+				var rukuDate=document.getElementById('rukuDate').value;
+				var kuweiId=document.getElementById('kuweiId').value;
+				var kuquId=document.getElementById('kuquId').value;
+				var juanhao=document.getElementById('juanhao').value;
+				var memo=document.getElementById('memo').value;
 	         	var submitinfo={rukuDate:rukuDate,kuweiId:kuweiId,kuquId:kuquId,juanhao:juanhao,memo:memo};
-	         	checkSaveByJuan(submitinfo, function(err) {
+				checkSaveByJuan(submitinfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);
 						return;
 					}
 				});
-	         });
-			mui.plusReady(function(){	
-				plus.key.addEventListener('keydown',function(e){
-					console.log("keydown: "+e.keyCode);
+			 });
+			mui.plusReady(function(){
+				initMe();
+				plus.key.addEventListener('keyup',function(e){
+					console.log("keyup: "+e.keyCode);
 					if(e.keyCode==224){
-						var result='13137-2';
+						var result=getCode();
 						var juanhao=document.getElementById('juanhao').value;
 						var juanArr=juanhao.split(',');
 						var index=$.inArray(result,juanArr);
 						if(index>=0){
 							mui.alert('该布卷已扫描');
-							return false;
+							return ;
 						}
-						document.getElementById('juanhao').value=juanhao+result+',';
 						var data=getMlData(result);
+						document.getElementById('juanhao').value=juanhao+result+',';
 			            doCodeData(data);
-//						plus.Scaner.ScanCode("Hello World",
-//			             function( result ) {
-//			             	mui.alert( result );
-//			             	var data=getMlData(result);
-//			             	doCodeData(data);
-//			             },
-//			             function(result){
-//			             	alert(result)
-//			             });
 					}
 					if(e.keyCode==4){
 						mui.back();
@@ -136,18 +126,9 @@
 						mui.trigger(document.getElementById('submit'),'tap');
 					}
 				},false);
-//				plus.key.addEventListener('keyup',function(e){
-//					console.log("keyup: "+e.keyCode);
-//				},false);
-//				plus.key.addEventListener('longpressed',function(e){
-//					console.log("longpressed: "+e.keyCode);
-//				},false);
-//				plus.key.addEventListener('menubutton',function(e){
-//					console.log("menubutton: "+e.keyCode);
-//				},false);
-				
 			});
-			function doCodeData(data){
+			function doCodeData(data)
+			{
 				console.log(JSON.stringify(data));
 				//判断之前的扫描结果有没有同缸号的，
 				var id=document.getElementById(data.c5);
@@ -167,10 +148,6 @@
 					$('#rukuData').append(str);
 				}
 			}
-			function getCode()
-	        {
-	            mui.alert(plus.Scaner.getCode(""));
-	        }
 		</script>
 	</body>
 

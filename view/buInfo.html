@@ -35,12 +35,13 @@
 		<script src="../js/app.js"></script>
 		<script>
 			mui.init();
-			mui.plusReady(function(){	
-				plus.key.addEventListener('keydown',function(e){
+			mui.plusReady(function(){
+				initMe();
+				plus.key.addEventListener('keyup',function(e){
 					console.log("keydown: "+e.keyCode);
 					if(e.keyCode==224){
-						var result='13137-2';
-						var data=getMlData(result);
+						var result=getCode();
+						var data=getClothInfo(result);
 			            doCodeData(data);
 					}
 					if(e.keyCode==4){
@@ -58,10 +59,6 @@
 				document.getElementById('productId').innerHTML=data.productId;
 				document.getElementById('checkTime').innerHTML=data.checkTime;
 			}
-			function getCode()
-	        {
-	            return  plus.Scaner.getCode("");
-	        }
 		</script>
 	</body>
 

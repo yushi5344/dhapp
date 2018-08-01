@@ -97,6 +97,7 @@
 				});
 	         });
 			mui.plusReady(function(){
+				initMe();
 				window.addEventListener('comfirmPageAC',function(event){
 					var productId=event.detail.productId;
 					var planId=event.detail.planId;
@@ -106,7 +107,7 @@
 				plus.key.addEventListener('keydown',function(e){
 					console.log("keydown: "+e.keyCode);
 					if(e.keyCode==224){
-						var result='14253-3';
+						var result=getCode();
 						var juanhao=document.getElementById('juanhao').value;
 						var juanArr=juanhao.split(',');
 						var index=$.inArray(result,juanArr);
@@ -121,7 +122,6 @@
 			        	}
 			            document.getElementById('juanhao').value=juanhao+result+',';
 			            doCodeData(data);
-			            console.log(document.getElementById('juanhao').value);
 					}
 					if(e.keyCode==4){
 						mui.back();
@@ -152,10 +152,6 @@
 					$('#chukuData').append(str);
 				}
 			}
-			function getCode()
-	        {
-	            return plus.Scaner.getCode("");
-	        }
 		</script>
 		
 	</body>

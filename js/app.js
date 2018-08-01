@@ -13,11 +13,11 @@ var login=function(loginInfo, callback){
 	var arr={'userName':loginInfo.account,'passwd':loginInfo.password,'token':config.token};
 	var data=request('POST',arr,config.apimethod.login);
 	if(!data.success){
-		return false;
-	}
+    	return false;
+    }
 	mui.toast('登录成功');
 	setTimeout(function(){
-		return createState(loginInfo.account, callback);
+		return createState(data.params, callback);
 	},600);
 	
 };
@@ -106,7 +106,7 @@ var getMlData=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
 	var data=request('POST',arr,config.apimethod.getMlData);
 	if(!data.success){
-		return false;
+		return ;
 	}
 	return data.params;
 }
@@ -125,14 +125,14 @@ var checkSaveByJuan=function(submitinfo,callback){
 		return callback('请扫描布卷');
 	}
 	var state = getState();
-	var creater=state.account;
+    var creater=state.account;
 	var arr={
 		'rukuDate':submitinfo.rukuDate,
 		'kuweiId':submitinfo.kuweiId,
 		'kuquId':submitinfo.kuquId,
 		'juanhao':submitinfo.juanhao,
 		'memo':submitinfo.memo,
-		'creater':creater,
+        'creater':creater,
 		'token':config.token
 	};
 	var data=request('POST',arr,config.apimethod.checkSaveByJuan);
@@ -140,7 +140,7 @@ var checkSaveByJuan=function(submitinfo,callback){
 		return false;
 	}
 	mui.toast(data.msg);
-	location.reload();
+    location.reload();
 }
 //BD单领用登记列表
 var bdListAdd=function(page,searchKey){
@@ -200,7 +200,7 @@ var getClothInfo=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
 	var data=request('POST',arr,config.apimethod.getClothInfo);
 	if(!data.success){
-		return false;
+		return ;
 	}
 	return data.params;
 }
@@ -252,4 +252,14 @@ var ACChukuSaveByJuan=function(submitInfo,callback){
 	}
 	mui.toast(data.msg);
 	mui.back();
+}
+//初始化扫码监听事件
+var initMe=function ()
+{
+    plus.Scaner.initMe("");
+}
+//获取条码值
+var getCode=function ()
+{
+    return code=plus.Scaner.getCode("");
 }
