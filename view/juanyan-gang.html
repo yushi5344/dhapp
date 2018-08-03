@@ -71,6 +71,7 @@
 		<script src="../js/app.js"></script>
 		<script>
 			mui.init();
+			listenDelete();
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
 			document.querySelector("#cangkuId").addEventListener("tap",function(){
@@ -91,17 +92,6 @@
 	            	document.getElementById('kuquIds').value=items[0].value;
 	            	document.getElementById('kuquId').value=items[0].id;
 	          	});
-	        });
-	        mui(".mui-table-view").on('tap','.mui-btn-red',function(){
-	        	var btnArray = ['是', '否'];
-		        var li = this.parentNode.parentNode;
-		        mui.confirm("Ar eyou sure?", "Message", btnArray, function (e) {
-		            if (e.index == 0) {
-		                li.parentNode.removeChild(li);
-		            }else {
-		                mui.swipeoutClose(li);
-		            }
-		        });
 	        });
 	        document.querySelector("#submit1").addEventListener("tap",function(){
 	        	

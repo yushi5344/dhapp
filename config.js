@@ -22,5 +22,6 @@ var config = {
 		checkSaveByGang:'Cangku.checkSaveByGang',//面料卷验入库--按缸
 		getMlDataChuByGang:'Cangku.getMlDataChuByGang',//通过卷号获取出库整缸布卷信息
 		ACChukuSaveByGang:'Cangku.ACChukuSaveByGang',//AC单领用出库--按卷--保存
+		BDChukuSaveByGang:'Cangku.BDChukuSaveByGang',//BD单领用出库--按缸
 	}
 }

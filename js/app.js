@@ -213,7 +213,11 @@ var getMlDataChuByGang=function(codeId){
 	}
 	return data.params;
 }
-
+/**
+ * BD单领用出库--按卷
+ * @param {Object} submitInfo
+ * @param {Object} callback
+ */
 var BDChukuSaveByJuan=function(submitInfo,callback){
 	console.log(JSON.stringify(submitInfo));
 	if (submitInfo.chukuDate.length =='') {
@@ -238,6 +242,41 @@ var BDChukuSaveByJuan=function(submitInfo,callback){
 		'token':config.token
 	};
 	var data=request('POST',arr,config.apimethod.BDChukuSaveByJuan);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+	mui.back();
+}
+/**
+ * BD单领用出库--按缸
+ * @param {Object} submitInfo
+ * @param {Object} callback
+ */
+var BDChukuSaveByGang=function(submitInfo,callback){
+	console.log(JSON.stringify(submitInfo));
+	if (submitInfo.chukuDate.length =='') {
+		return callback('请选择出库日期');
+	}
+	if (submitInfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitInfo.madanId.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+	var creater=state.account;
+	var arr={
+		'chukuDate':submitInfo.chukuDate,
+		'kuweiId':submitInfo.kuweiId,
+		'planId':submitInfo.planId,
+		'productId':submitInfo.productId,
+		'madanId':submitInfo.madanId,
+		'memo':submitInfo.memo,
+		'creater':creater,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.BDChukuSaveByGang);
 	if(!data.success){
 		return false;
 	}
@@ -363,7 +402,7 @@ var listenDelete=function(){
 	mui(".mui-table-view").on('tap','.mui-btn-red',function(){
     	var btnArray = ['是', '否'];
         var li = this.parentNode.parentNode;
-        mui.confirm("确定删除?", "Message", btnArray, function (e) {
+        mui.confirm("确定删除?", "提示", btnArray, function (e) {
             if (e.index == 0) {
                 li.parentNode.removeChild(li);
             }else {
