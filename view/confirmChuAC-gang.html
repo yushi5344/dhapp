@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/mui.picker.css" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">领用扫码</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+			    <div class="mui-input-row">
+			        <label>出库日期</label>
+			    	<input type="date" class="mui-input-clear" name="chukuDate" id="chukuDate">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>仓库类别</label>
+			        <input type="text" class="mui-input-clear" id="cangkuId"  placeholder="请选择仓库">
+			        <input type="hidden"  id="kuweiId" name="kuweiId" value="">
+			    </div>
+			    <div class="mui-input-row">
+			        <label>调入仓库</label>
+			        <input type="text" class="mui-input-clear" id="kuweiIdrus" placeholder="请选择库位" readonly="readonly">
+			        <input type="hidden" name="kuweiIdru" id="kuweiIdru" />
+			        <input type="hidden" class="mui-input-clear" id="planId">
+			    </div>
+			    
+			     <div class="mui-input-row">
+			        <label>产品编码</label>
+			        <input type="text" class="mui-input-clear" id="productId"  readonly="readonly">
+			        <input type="hidden" name="ganghao" id="ganghao" value=""/>
+			    </div>
+			    <div class="mui-input-row">
+			    	<label>备注</label>
+			    	<input type="text" class="mui-input-clear" name="memo" id="memo">
+			    </div>
+			    <div class="mui-input-row">
+			    	<label for="">出库信息</label>
+			    </div>
+			    <div id="chukuData">
+			    	<ul class="mui-table-view">
+						
+					</ul>
+			    </div>
+			   
+			    <div class="mui-button-row">
+			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认入库</button>
+			        <button type="button" class="mui-btn mui-btn-primary" id="submit1" >模拟</button>
+			    </div>
+			</form>
+		</div>
+		<script src="../config.js"></script>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript" src="../js/mui.picker.js"></script>
+		<script type="text/javascript" src="../js/mui.poppicker.js"></script>
+		<script src="../js/scaner.js"></script>
+		<script type="text/javascript" src="../js/jquery.1.9.1.js"></script>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			listenDelete();
+			var picker = new mui.PopPicker();
+			var table = document.body.querySelector('.mui-table-view');
+			document.querySelector("#cangkuId").addEventListener("tap",function(){
+				picker.setData(getMlCangku());
+		  		picker.show(function(items){
+	            	document.getElementById('cangkuId').value=items[0].value;
+	            	document.getElementById('kuweiId').value=items[0].id;
+	          	});
+	       });
+	       document.querySelector("#kuweiIdrus").addEventListener("tap",function(){
+				picker.setData(suppierRc());
+		  		picker.show(function(items){
+	            	document.getElementById('kuweiIdrus').value=items[0].value;
+	            	document.getElementById('kuweiIdru').value=items[0].id;
+	          	});
+	       });
+	       document.querySelector("#submit1").addEventListener("tap",function(){
+	       		var result='8180-5';
+				var data=getMlDataChuByGang(result);
+	            doCodeData(data);
+	       });
+	        document.querySelector("#submit").addEventListener("tap",function(){
+	         	var chukuDate=document.getElementById('chukuDate').value;
+	         	var kuweiId=document.getElementById('kuweiId').value;
+	         	var kuweiIdru=document.getElementById('kuweiIdru').value;
+	         	var planId=document.getElementById('planId').value;
+	         	var li=table.getElementsByClassName('mui-table-view-cell');
+				var madanIdArr=[];
+				for (var i=0;i<li.length;i++) {
+					madanIdArr.push(li[i].getAttribute('id'));
+				}
+				var madanId=madanIdArr.join(',');
+	         	var productId=document.getElementById('productId').value;
+	         	var memo=document.getElementById('memo').value;
+	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,kuweiIdru:kuweiIdru,planId:planId,madanId:madanId,productId:productId,memo:memo};
+	         	ACChukuSaveByGang(submitinfo, function(err) {
+					if (err) {
+						plus.nativeUI.toast(err);
+						return;
+					}
+				});
+	         });
+			mui.plusReady(function(){
+//				initMe();
+				var productId = plus.webview.currentWebview().productId;
+				var planId = plus.webview.currentWebview().planId;
+				document.getElementById('productId').value=productId;
+	            document.getElementById('planId').value=planId;
+	            console.log(planId);
+				plus.key.addEventListener('keydown',function(e){
+					console.log("keydown: "+e.keyCode);
+					if(e.keyCode==224){
+						var result=getCode();
+						var data=getMlDataChuByGang(result);
+			            doCodeData(data);
+					}
+					if(e.keyCode==4){
+						mui.back();
+					}
+					if(e.keyCode==5){
+						mui.trigger(document.getElementById('submit'),'tap');
+					}
+				},false);
+			});
+			function doCodeData(data){
+				mui.each(data, function(index, item) {
+					if(!index){
+						var result=item.ganghao;
+						var productId=item.productId;
+						if(productId !=document.getElementById('productId').value){
+			        		mui.alert('产品编码不一致');
+			        		return false;
+			        	}
+						var ganghao=document.getElementById('ganghao').value;
+						var gangArr=ganghao.split(',');
+						var isset=$.inArray(result,gangArr);
+						if(isset>=0){
+							mui.alert('该缸号已扫描');
+							return false;
+						}
+						document.getElementById('ganghao').value=ganghao+result+',';
+					}
+					var str = '';
+					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
+					str += '<div class="mui-slider-handle">缸号:'+item.ganghao+',卷号:'+item.rollNo+',长度：'+item.cntL+'，重量：'+item.cnt+'</div>';
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.id=item.id;
+					li.innerHTML = str;
+					table.appendChild(li);
+				});
+				console.log(document.getElementById('ganghao').value);
+			}
+		</script>
+		
+	</body>
+
+</html>

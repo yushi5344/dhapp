@@ -197,6 +197,23 @@ var getMlDataChu=function(codeId){
 	}
 	return data.params;
 }
+/**
+ * 通过卷号获取出库整缸布卷信息
+ * @param {Object} codeId
+ * @return {Object}
+ */
+var getMlDataChuByGang=function(codeId){
+	var arr={
+		codeId:codeId,
+		token:config.token
+	};
+	var data=request('POST',arr,config.apimethod.getMlDataChuByGang);
+	if(!data.success){
+		return;
+	}
+	return data.params;
+}
+
 var BDChukuSaveByJuan=function(submitInfo,callback){
 	console.log(JSON.stringify(submitInfo));
 	if (submitInfo.chukuDate.length =='') {
@@ -254,6 +271,11 @@ var suppierRc=function(){
 	var data=request('POST',arr,config.apimethod.suppierRc);
 	return data.params;
 }
+/**
+ * AC单按卷出库
+ * @param {Object} submitInfo
+ * @param {Object} callback
+ */
 var ACChukuSaveByJuan=function(submitInfo,callback){
 	console.log(JSON.stringify(submitInfo));
 	if (submitInfo.chukuDate.length =='') {
@@ -285,6 +307,37 @@ var ACChukuSaveByJuan=function(submitInfo,callback){
 	mui.toast(data.msg);
 	mui.back();
 }
+var ACChukuSaveByGang=function(submitInfo,callback){
+	console.log(JSON.stringify(submitInfo));
+	if (submitInfo.chukuDate.length =='') {
+		return callback('请选择出库日期');
+	}
+	if (submitInfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitInfo.madanId.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+	var creater=state.account;
+	var arr={
+		'chukuDate':submitInfo.chukuDate,
+		'kuweiId':submitInfo.kuweiId,
+		'kuweiIdru':submitInfo.kuweiIdru,
+		'planId':submitInfo.planId,
+		'productId':submitInfo.productId,
+		'madanId':submitInfo.madanId,
+		'memo':submitInfo.memo,
+		'creater':creater,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.ACChukuSaveByGang);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+	mui.back();
+}
 //初始化扫码监听事件
 var initMe=function ()
 {
@@ -303,6 +356,22 @@ var getGangData=function(codeId){
 	}
 	return data.params;
 }
+/**
+ * li标签左滑删除
+ */
+var listenDelete=function(){
+	mui(".mui-table-view").on('tap','.mui-btn-red',function(){
+    	var btnArray = ['是', '否'];
+        var li = this.parentNode.parentNode;
+        mui.confirm("确定删除?", "Message", btnArray, function (e) {
+            if (e.index == 0) {
+                li.parentNode.removeChild(li);
+            }else {
+                mui.swipeoutClose(li);
+            }
+        });
+    });
+}
 
 
 
@@ -374,9 +443,10 @@ var getGangData=function(codeId){
 
 
 
-
-
+var as = 'pop-in'; // 默认窗口动画
 var _openw = null;
+// 预创建二级页面
+var preate = {};
 //打开新页面
 function clicked(id, param, a, s) {
   var obj = {
@@ -394,7 +464,7 @@ function clicked(id, param, a, s) {
     });
   } else {
     var wa = plus.nativeUI.showWaiting();
-    obj = $.extend(obj, param);
+    obj = mui.extend(obj, param);
     _openw = plus.webview.create(id, id, {
       scrollIndicator: 'none',
       scalable: false,
