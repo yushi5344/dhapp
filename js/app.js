@@ -142,6 +142,38 @@ var checkSaveByJuan=function(submitinfo,callback){
 	mui.toast(data.msg);
     location.reload();
 }
+//卷验按缸入库提交
+var checkSaveByGang=function(submitinfo,callback){
+	if (submitinfo.rukuDate.length =='') {
+		return callback('请选择入库日期');
+	}
+	if (submitinfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitinfo.kuquId.length =='') {
+		return callback('请选择库位');
+	}
+	if (submitinfo.checkId.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+    var creater=state.account;
+	var arr={
+		'rukuDate':submitinfo.rukuDate,
+		'kuweiId':submitinfo.kuweiId,
+		'kuquId':submitinfo.kuquId,
+		'checkId':submitinfo.checkId,
+		'memo':submitinfo.memo,
+        'creater':creater,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.checkSaveByGang);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+    location.reload();
+}
 //BD单领用登记列表
 var bdListAdd=function(page,searchKey){
 	var arr={
@@ -263,6 +295,86 @@ var getCode=function ()
 {
     return code=plus.Scaner.getCode("");
 }
+var getGangData=function(codeId){
+	var arr={'token':config.token,codeId:codeId};
+	var data=request('POST',arr,config.apimethod.getGangData);
+	if(!data.success){
+		return ;
+	}
+	return data.params;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var _openw = null;
 //打开新页面

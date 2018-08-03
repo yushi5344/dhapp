@@ -18,5 +18,7 @@ var config = {
 		acListAdd:'Cangku.acListAdd',//AC单领用登记列表
 		suppierRc:'Cangku.suppierRc',//染厂加工户列表
 		ACChukuSaveByJuan:'Cangku.ACChukuSaveByJuan',//AC单领用出库--按卷--保存
+		getGangData:'Cangku.getGangData',//通过条码值获取整缸面料
+		checkSaveByGang:'Cangku.checkSaveByGang',//面料卷验入库--按缸
 	}
 }

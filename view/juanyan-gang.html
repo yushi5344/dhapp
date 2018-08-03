@@ -42,7 +42,7 @@
 			        <label>库位</label>
 			        <input type="text" class="mui-input-clear" id="kuquIds" placeholder="请选择库位" readonly="readonly">
 			        <input type="hidden" name="kuquId" id="kuquId" />
-					<input type="hidden" name="juanhao" id="juanhao" value=""/>
+					<input type="hidden" name="ganghao" id="ganghao" value=""/>
 			    </div>
 				<div class="mui-input-row">
 					<label>备注</label>
@@ -52,7 +52,9 @@
 			    	<label>入库信息</label>
 			    </div>
 				<div id="rukuData">
-
+					<ul class="mui-table-view">
+						
+					</ul>
 				</div>
 			    <div class="mui-button-row">
 			        <button type="button" class="mui-btn mui-btn-primary" id="submit">确认入库</button>
@@ -70,6 +72,7 @@
 		<script>
 			mui.init();
 			var picker = new mui.PopPicker();
+			var table = document.body.querySelector('.mui-table-view');
 			document.querySelector("#cangkuId").addEventListener("tap",function(){
 				picker.setData(getMlCangku());
 		  		picker.show(function(items){
@@ -89,17 +92,33 @@
 	            	document.getElementById('kuquId').value=items[0].id;
 	          	});
 	        });
+	        mui(".mui-table-view").on('tap','.mui-btn-red',function(){
+	        	var btnArray = ['是', '否'];
+		        var li = this.parentNode.parentNode;
+		        mui.confirm("Ar eyou sure?", "Message", btnArray, function (e) {
+		            if (e.index == 0) {
+		                li.parentNode.removeChild(li);
+		            }else {
+		                mui.swipeoutClose(li);
+		            }
+		        });
+	        });
 	        document.querySelector("#submit1").addEventListener("tap",function(){
-	        	alert(1);
+	        	
 	        });
 			 document.querySelector("#submit").addEventListener("tap",function(){
 				var rukuDate=document.getElementById('rukuDate').value;
 				var kuweiId=document.getElementById('kuweiId').value;
 				var kuquId=document.getElementById('kuquId').value;
-				var juanhao=document.getElementById('juanhao').value;
 				var memo=document.getElementById('memo').value;
-	         	var submitinfo={rukuDate:rukuDate,kuweiId:kuweiId,kuquId:kuquId,juanhao:juanhao,memo:memo};
-				checkSaveByJuan(submitinfo, function(err) {
+				var li=table.getElementsByClassName('mui-table-view-cell');
+				var checkIdArr=[];
+				for (var i=0;i<li.length;i++) {
+					checkIdArr.push(li[i].getAttribute('id'));
+				}
+				var checkId=checkIdArr.join(',');
+	         	var submitinfo={rukuDate:rukuDate,kuweiId:kuweiId,kuquId:kuquId,checkId:checkId,memo:memo};
+				checkSaveByGang(submitinfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);
 						return;
@@ -112,16 +131,8 @@
 					console.log("keyup: "+e.keyCode);
 					if(e.keyCode==224){
 						var result=getCode();
-						var juanhao=document.getElementById('juanhao').value;
-						var juanArr=juanhao.split(',');
-						var index=$.inArray(result,juanArr);
-						if(index>=0){
-							mui.alert('该布卷已扫描');
-							return ;
-						}
-						var data=getMlData(result);
-						document.getElementById('juanhao').value=juanhao+result+',';
-			            doCodeData(data);
+						var data=getGangData(result);
+			            doCodeData(data,ganghao);
 					}
 					if(e.keyCode==4){
 						mui.back();
@@ -133,24 +144,27 @@
 			});
 			function doCodeData(data)
 			{
-				console.log(JSON.stringify(data));
-				//判断之前的扫描结果有没有同缸号的，
-				var id=document.getElementById(data.c5);
-				var str='';
-				if(id!=null){
-					var elelenth=id.getElementsByClassName('length')[0];
-					var eleweight=id.getElementsByClassName('weight')[0];
-					var elejuan=id.getElementsByClassName('juan')[0];
-					var length=parseFloat(elelenth.innerHTML)+parseFloat(data.length);
-					var weight=parseFloat(eleweight.innerHTML)+parseFloat(data.weight);
-					var juan=parseInt(elejuan.innerHTML)+1;
-					elelenth.innerHTML=length;
-					eleweight.innerHTML=weight;
-					elejuan.innerHTML=juan;
-				}else{
-					str='<div class="mui-input-row rukumingxi" id="'+data.c5+'">缸号:<span class="ganghao">'+data.c5+'</span>,长度:<span class="length">'+data.length+'</span>,重量:<span class="weight">'+data.weight+'</span>,卷数:<span class="juan">1</span></div>';
-					$('#rukuData').append(str);
-				}
+				mui.each(data, function(index, item) {
+					if(!index){
+						var result=item.c5;
+						var ganghao=document.getElementById('ganghao').value;
+						var gangArr=ganghao.split(',');
+						var isset=$.inArray(result,gangArr);
+						if(isset>=0){
+							mui.alert('该缸号已扫描');
+							return false;
+						}
+						document.getElementById('ganghao').value=ganghao+result+',';
+					}
+					var str = '';
+					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
+					str += '<div class="mui-slider-handle">条码：'+item.orderId+'-'+item.checkId+',缸号:'+item.c5+',卷号:'+item.checkId+',长度：'+item.length+'，重量：'+item.weight+'</div>';
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.id=item.id;
+					li.innerHTML = str;
+					table.appendChild(li);
+				});
 			}
 		</script>
 	</body>

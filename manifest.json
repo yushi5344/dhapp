@@ -146,7 +146,8 @@
 					"view/juanyan.html",
 					"view/BDlistAdd.html",
 					"view/AClistAdd.html",
-					"view/buInfo.html"
+					"view/buInfo.html",
+					"view/juanyan-gang.html"
 				],
 				"priority": 0
 			},
@@ -189,6 +190,13 @@
 				"priority": 0
 			},
 			"view/buInfo.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
+				],
+				"priority": 0
+			},
+			"view/juanyan-gang.html": {
 				"resources": [],
 				"refer": [
 					"index.html"
