@@ -411,11 +411,47 @@ var listenDelete=function(){
         });
     });
 }
-
-
-
-
-
+/**
+ * 面料销售出库列表
+ * @param {Object} page
+ * @param {Object} searchKey
+ */
+var XsCkListAdd=function(page,searchKey){
+	var arr={
+		pageSize:config.pagesize,
+		page:page,
+		token:config.token,
+		key:searchKey,
+		method:config.apimethod.XsCkListAdd
+	};
+	var data=requestData('GET',arr);
+	return data;
+}
+/**
+ * 获取物流公司列表
+ */
+var getDelComp=function(){
+	var arr={'token':config.token};
+	var data=request('POST',arr,config.apimethod.getDelComp);
+	return data.params;
+}
+/**
+ * 获取发货地址
+ * @param {Object} orderId
+ */
+var getDelAddress=function(orderId){
+	var arr={'token':config.token,'orderId':orderId};
+	var data=request('POST',arr,config.apimethod.getDelAddress);
+	return data.params;
+}
+/**
+ * 获取发货区域
+ */
+var getShipArea=function(){
+	var arr={'token':config.token};
+	var data=request('POST',arr,config.apimethod.getShipArea);
+	return data.params;
+}
 
 
 

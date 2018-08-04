@@ -20,7 +20,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title">AC、DY单领用-按卷</h1>
+			<h1 id="title" class="mui-title">销售出库</h1>
 		</header>
 		<div class="mui-bar mui-bar-standard mui-bar-header-secondary">
 			<div id="searchForm">
@@ -62,19 +62,12 @@
 					document.activeElement.blur();
 
 				});
-				var replodpage = mui.preload({
-					url: 'confirmChuAC.html',
-					id: 'confirmChuAC'
-				});
+				
 				mui('.mui-table-view').on('tap', 'li', function() {
-					var productId = this.getAttribute('productId');
-					var planId = this.getAttribute('planId');
-					mui.fire(replodpage, 'comfirmPageAC', {
-						productId:productId,
-						planId:planId
-					});
-					mui.openWindow({
-						id: 'confirmChuAC'
+					var orderId = this.getAttribute('id');
+					clicked('_www/view/confirmXsCk.html',
+					{
+						orderId:orderId
 					});
 				});
 			});
@@ -89,13 +82,13 @@
 					orderCode = mui('#searchKey')[0].value;
 				}
 				var table = document.body.querySelector('.mui-table-view');
-				var data=acListAdd(page,orderCode);
+				var data=XsCkListAdd(page,orderCode);
 				if(searchKey!=''){
 					var str = '';
 					mui.each(data.params.data, function(index, item) {
-						str += '<li class="mui-table-view-cell  mui-media" planId="'+item.planId+'" productId="'+item.productId+'">';
+						str += '<li class="mui-table-view-cell  mui-media" id="'+item.orderId+'>';
 						str += '<div class="mui-media-body" style="color:red;">';
-						str += ' ' + item.orderCode + ' <p class="mui-ellipsis">' + item.productId + ' 　需求量：   　' + item.cnt + ' </p>';
+						str += ' ' + item.orderCode + ' <p class="mui-ellipsis"> 已出库:　' + item.cntCk + ' 　数量：   　' + item.cnt + ' </p>';
 						str += '</div></li>'
 					});
 					table.innerHTML = str;
@@ -103,12 +96,11 @@
 					mui.each(data.params.data, function(index, item) {
 						var str = '';
 						str += '<div class="mui-media-body" style="color:red;">';
-						str += ' ' + item.orderCode + ' <p class="mui-ellipsis">' + item.productId + ' 　需求量：   　' + item.cnt + ' </p>';
+						str += ' ' + item.orderCode + ' <p class="mui-ellipsis"> 已出库:' + item.cntCk + ' 　数量：   　' + item.cnt + ' </p>';
 						str += '</div>'
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell  mui-media';
-						li.setAttribute('productId', item.productId);
-						li.setAttribute('planId', item.planId);
+						li.id=item.orderId;
 						li.innerHTML = str;
 						table.appendChild(li);
 					});
