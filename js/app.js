@@ -452,7 +452,51 @@ var getShipArea=function(){
 	var data=request('POST',arr,config.apimethod.getShipArea);
 	return data.params;
 }
-
+/**
+ * 销售出库--保存
+ * @param {Object} submitInfo
+ * @param {Object} callback
+ */
+var XsCkSaveByJuan=function(submitInfo,callback){
+	console.log(JSON.stringify(submitInfo));
+	if (submitInfo.chukuDate.length =='') {
+		return callback('请选择出库日期');
+	}
+	if (submitInfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitInfo.shipping.length =='') {
+		return callback('请选择收货地址');
+	}
+	if (submitInfo.ship_area.length =='') {
+		return callback('请选择发货区域');
+	}
+	if (submitInfo.juanhao.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+	var creater=state.account;
+	var arr={
+		'chukuDate':submitInfo.chukuDate,
+		'kuweiId':submitInfo.kuweiId,
+		'shipping':submitInfo.shipping,
+		'productId':submitInfo.productId,
+		'juanhao':submitInfo.juanhao,
+		'memo':submitInfo.memo,
+		'corp_name':submitInfo.corp_name,
+		'ship_area':submitInfo.ship_area,
+		'creater':creater,
+		'clientId':submitInfo.clientId,
+		'orderId':submitInfo.orderId,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.XsCkSaveByJuan);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+	mui.back();
+}
 
 
 

@@ -27,6 +27,6 @@ var config = {
 		getDelComp:'Wuliu.getDelComp',//获取物流公司列表
 		getDelAddress:'Wuliu.getDelAddress',//获取发货地址
 		getShipArea:'Wuliu.getShipArea',//获取发货区域
-		
+		XsCkSaveByJuan:'Cangku.XsCkSaveByJuan',//销售出库--按卷
 	}
 }
