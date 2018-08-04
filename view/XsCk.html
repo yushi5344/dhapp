@@ -65,9 +65,13 @@
 				
 				mui('.mui-table-view').on('tap', 'li', function() {
 					var orderId = this.getAttribute('id');
+					var productId = this.getAttribute('productId');
+					var clientId = this.getAttribute('clientId');
 					clicked('_www/view/confirmXsCk.html',
 					{
-						orderId:orderId
+						orderId:orderId,
+						productId:productId,
+						clientId:clientId
 					});
 				});
 			});
@@ -86,7 +90,7 @@
 				if(searchKey!=''){
 					var str = '';
 					mui.each(data.params.data, function(index, item) {
-						str += '<li class="mui-table-view-cell  mui-media" id="'+item.orderId+'>';
+						str += '<li class="mui-table-view-cell  mui-media" id="'+item.orderId+'" productId="'+item.productId+'" clientId="'+item.clientId+'">';
 						str += '<div class="mui-media-body" style="color:red;">';
 						str += ' ' + item.orderCode + ' <p class="mui-ellipsis"> 已出库:　' + item.cntCk + ' 　数量：   　' + item.cnt + ' </p>';
 						str += '</div></li>'
@@ -101,6 +105,8 @@
 						var li = document.createElement('li');
 						li.className = 'mui-table-view-cell  mui-media';
 						li.id=item.orderId;
+						li.setAttribute('productId',item.productId);
+						li.setAttribute('clientId',item.clientId);
 						li.innerHTML = str;
 						table.appendChild(li);
 					});

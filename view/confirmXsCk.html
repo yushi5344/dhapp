@@ -56,14 +56,15 @@
 			    	<label>备注</label>
 			    	<input type="text" class="mui-input-clear" name="memo" id="memo">
 			    	<input type="text" class="mui-input-clear"  id="orderId" value="">
+			    	<input type="text" class="mui-input-clear"  id="clientId" value="">
+			    	<input type="text" class="mui-input-clear"  id="juanhao" value="12209-1,12209-2,12209-15,12209-18,">
 			    </div>
 			    <div class="mui-input-row">
 			    	<label for="">出库信息</label>
 			    </div>
 			    <div id="chukuData">
-			    	<ul class="mui-table-view">
-						
-					</ul>
+			    	<div class="mui-input-row rukumingxi" id="ML04190(19048)">缸号:<span class="ganghao">ML04190(19048)</span>,长度:<span class="length">59.90</span>,重量:<span class="weight">18.75</span>,卷数:<span class="juan">1</span></div>
+			    	<div class="mui-input-row rukumingxi" id="19049">缸号:<span class="ganghao">19049</span>,长度:<span class="length">56.00</span>,重量:<span class="weight">18.05</span>,卷数:<span class="juan">1</span></div>
 			    </div>
 			   
 			    <div class="mui-button-row">
@@ -81,7 +82,6 @@
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			listenDelete();
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
 			document.querySelector("#cangkuId").addEventListener("tap",function(){
@@ -114,24 +114,21 @@
 	          	});
 	      	});
 	       document.querySelector("#submit1").addEventListener("tap",function(){
-	       		var result='13690-2';
-				var data=getMlDataChuByGang(result);
-	            doCodeData(data);
+	       		
 	       });
 	        document.querySelector("#submit").addEventListener("tap",function(){
 	         	var chukuDate=document.getElementById('chukuDate').value;
 	         	var kuweiId=document.getElementById('kuweiId').value;
-	         	var planId=document.getElementById('planId').value;
-	         	var li=table.getElementsByClassName('mui-table-view-cell');
-				var madanIdArr=[];
-				for (var i=0;i<li.length;i++) {
-					madanIdArr.push(li[i].getAttribute('id'));
-				}
-				var madanId=madanIdArr.join(',');
+	         	var shipping=document.getElementById('shipping').value;
+	         	var corp_name=document.getElementById('corp_name').value;
+	         	var ship_area=document.getElementById('ship_area').value;
 	         	var productId=document.getElementById('productId').value;
+	         	var clientId=document.getElementById('clientId').value;
+	         	var juanhao=document.getElementById('juanhao').value;
 	         	var memo=document.getElementById('memo').value;
-	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,planId:planId,madanId:madanId,productId:productId,memo:memo};
-	         	BDChukuSaveByGang(submitinfo, function(err) {
+	         	var orderId=document.getElementById('orderId').value;
+	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,shipping:shipping,juanhao:juanhao,corp_name:corp_name,ship_area:ship_area,productId:productId,clientId:clientId,memo:memo,orderId:orderId};
+	         	XsCkSaveByJuan(submitinfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);
 						return;
@@ -140,16 +137,32 @@
 	         });
 			mui.plusReady(function(){
 //				initMe();
-				
+				var productId = plus.webview.currentWebview().productId;
 				var orderId = plus.webview.currentWebview().orderId;
+				var clientId = plus.webview.currentWebview().clientId;
 				document.getElementById('orderId').value=orderId;
+				document.getElementById('productId').value=productId;
+				document.getElementById('clientId').value=clientId;
 	            console.log(orderId);
-				plus.key.addEventListener('keydown',function(e){
+				plus.key.addEventListener('keyup',function(e){
 					console.log("keydown: "+e.keyCode);
 					if(e.keyCode==224){
 						var result=getCode();
-						var data=getMlDataChuByGang(result);
+						var juanhao=document.getElementById('juanhao').value;
+						var juanArr=juanhao.split(',');
+						var index=$.inArray(result,juanArr);
+						if(index>=0){
+							mui.alert('该布卷已扫描');
+							return;
+						}
+						var data=getMlDataChu(result);
+						if(data.productId !=document.getElementById('productId').value){
+			        		mui.alert('产品编码不一致');
+			        		return ;
+			        	}
+			            document.getElementById('juanhao').value=juanhao+result+',';
 			            doCodeData(data);
+			            console.log(document.getElementById('juanhao').value);
 					}
 					if(e.keyCode==4){
 						mui.back();
@@ -160,33 +173,25 @@
 				},false);
 			});
 			function doCodeData(data){
-				mui.each(data, function(index, item) {
-					if(!index){
-						var result=item.ganghao;
-						var productId=item.productId;
-						if(productId !=document.getElementById('productId').value){
-			        		mui.alert('产品编码不一致');
-			        		return false;
-			        	}
-						var ganghao=document.getElementById('ganghao').value;
-						var gangArr=ganghao.split(',');
-						var isset=$.inArray(result,gangArr);
-						if(isset>=0){
-							mui.alert('该缸号已扫描');
-							return false;
-						}
-						document.getElementById('ganghao').value=ganghao+result+',';
-					}
-					var str = '';
-					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
-					str += '<div class="mui-slider-handle">缸号:'+item.ganghao+',卷号:'+item.rollNo+',长度：'+item.cntL+'，重量：'+item.cnt+'</div>';
-					var li = document.createElement('li');
-					li.className = 'mui-table-view-cell';
-					li.id=item.id;
-					li.innerHTML = str;
-					table.appendChild(li);
-				});
-				console.log(document.getElementById('ganghao').value);
+				console.log(JSON.stringify(data));
+				//判断之前的扫描结果有没有同缸号的，
+				var id=document.getElementById(data.ganghao);
+				var str='';
+				if(id!=null){
+					var elelenth=id.getElementsByClassName('length')[0];
+					var eleweight=id.getElementsByClassName('weight')[0];
+					var elejuan=id.getElementsByClassName('juan')[0];
+					var length=parseFloat(elelenth.innerHTML)+parseFloat(data.cntL);
+					var weight=parseFloat(eleweight.innerHTML)+parseFloat(data.cnt);
+					var juan=parseInt(elejuan.innerHTML)+1;
+					elelenth.innerHTML=length;
+					eleweight.innerHTML=weight;
+					elejuan.innerHTML=juan;
+				}else{
+					str='<div class="mui-input-row rukumingxi" id="'+data.ganghao+'">缸号:<span class="ganghao">'+data.ganghao+'</span>,长度:<span class="length">'+data.cntL+'</span>,重量:<span class="weight">'+data.cnt+'</span>,卷数:<span class="juan">1</span></div>';
+					console.log(str);
+					$('#chukuData').append(str);
+				}
 			}
 		</script>
 		
