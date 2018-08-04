@@ -28,5 +28,8 @@ var config = {
 		getDelAddress:'Wuliu.getDelAddress',//获取发货地址
 		getShipArea:'Wuliu.getShipArea',//获取发货区域
 		XsCkSaveByJuan:'Cangku.XsCkSaveByJuan',//销售出库--按卷
+		XsCkSaveByGang:'Cangku.XsCkSaveByGang',//销售出库--按缸
+		
+		
 	}
 }

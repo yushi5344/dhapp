@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style type="text/css">
+			.mui-content>.mui-table-view:first-child {
+				margin-top: -1px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">销售出库--按缸</h1>
+		</header>
+		<div class="mui-bar mui-bar-standard mui-bar-header-secondary">
+			<div id="searchForm">
+				<div class="mui-input-row mui-search">
+					<input id="searchKey" type="search" class="mui-input-clear" placeholder="请输入订单号">
+				</div>
+			</div>
+		</div>
+		<!--下拉刷新容器-->
+		<div class="mui-content">
+			<div id="pullrefresh">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron"></ul>
+			</div>
+		</div>
+		<script src="../config.js"></script>
+		<script src="../js/mui.js"></script>
+		<script src="../js/app.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style: 'circle',
+						callback: pulldownRefresh
+					},
+					up: {
+						auto: true,
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			mui.plusReady(function() {
+				var search = document.querySelector('#searchKey');
+				search.addEventListener('search', function(e) {
+					pullupRefresh(search.value);
+					//隐藏软键盘
+					document.activeElement.blur();
+
+				});
+				
+				mui('.mui-table-view').on('tap', 'li', function() {
+					var orderId = this.getAttribute('id');
+					var productId = this.getAttribute('productId');
+					var clientId = this.getAttribute('clientId');
+					clicked('_www/view/confirmXsCk-gang.html',
+					{
+						orderId:orderId,
+						productId:productId,
+						clientId:clientId
+					});
+				});
+			});
+			page=0;
+			function pullupRefresh(searchKey) {
+				var _this = this;
+				var searchKey = searchKey || '';
+				var orderCode = '';
+				if(searchKey != '') {
+					orderCode = searchKey;
+				} else {
+					orderCode = mui('#searchKey')[0].value;
+				}
+				var table = document.body.querySelector('.mui-table-view');
+				var data=XsCkListAdd(page,orderCode);
+				if(searchKey!=''){
+					var str = '';
+					mui.each(data.params.data, function(index, item) {
+						str += '<li class="mui-table-view-cell  mui-media" id="'+item.orderId+'" productId="'+item.productId+'" clientId="'+item.clientId+'">';
+						str += '<div class="mui-media-body" style="color:red;">';
+						str += ' ' + item.orderCode + ' <p class="mui-ellipsis"> 已出库:　' + item.cntCk + ' 　数量：   　' + item.cnt + ' </p>';
+						str += '</div></li>'
+					});
+					table.innerHTML = str;
+				}else{
+					mui.each(data.params.data, function(index, item) {
+						var str = '';
+						str += '<div class="mui-media-body" style="color:red;">';
+						str += ' ' + item.orderCode + ' <p class="mui-ellipsis"> 已出库:' + item.cntCk + ' 　数量：   　' + item.cnt + ' </p>';
+						str += '</div>'
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell  mui-media';
+						li.id=item.orderId;
+						li.setAttribute('productId',item.productId);
+						li.setAttribute('clientId',item.clientId);
+						li.innerHTML = str;
+						table.appendChild(li);
+					});
+				}
+				var cont;
+				if(page>=data.params.page.lastPage){
+					cont=true;
+				}else{
+					cont=false;
+				}
+				mui('#pullrefresh').pullRefresh().endPullup(cont);
+				page++;
+			}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					//					addData();
+					mui('#pullrefresh').pullRefresh().endPulldown();
+					mui.toast("没有最新数据了");
+				}, 1500);
+			}
+		</script>
+	</body>
+
+</html>

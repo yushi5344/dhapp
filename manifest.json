@@ -147,7 +147,8 @@
 					"view/BDlistAdd.html",
 					"view/AClistAdd.html",
 					"view/buInfo.html",
-					"view/juanyan-gang.html"
+					"view/juanyan-gang.html",
+					"view/XsCk-gang.html"
 				],
 				"priority": 0
 			},
@@ -199,6 +200,14 @@
 			"view/juanyan-gang.html": {
 				"resources": [],
 				"refer": [
+					"index.html"
+				],
+				"priority": 0
+			},
+			"view/XsCk-gang.html": {
+				"resources": [],
+				"refer": [
+					"view/confirmXsCk-gang.html",
 					"index.html"
 				],
 				"priority": 0
