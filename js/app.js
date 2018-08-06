@@ -542,8 +542,57 @@ var XsCkSaveByGang=function(submitInfo,callback){
 	mui.toast(data.msg);
 	mui.back();
 }
-
-
+/**
+ * 通过卷号获取出要回料的布卷信息
+ * @param {String} codeId
+ */
+var getHuiData=function(codeId){
+	var arr={'token':config.token,codeId:codeId};
+	var data=request('POST',arr,config.apimethod.getHuiData);
+	if(!data.success){
+		return ;
+	}
+	return data.params;
+}
+var HuiliaoSaveByJuan=function(submitinfo,callback){
+	console.log(JSON.stringify(submitinfo));
+	if (submitinfo.rukuDate.length =='') {
+		return callback('请选择入库日期');
+	}
+	if (submitinfo.kuweiId.length =='') {
+		return callback('请选择仓库');
+	}
+	if (submitinfo.kuquId.length =='') {
+		return callback('请选择库位');
+	}
+	if (submitinfo.weight.length =='') {
+		return callback('请输入入库重量');
+	}
+	if (parseFloat(submitinfo.weight)>parseFloat(submitinfo.weights)) {
+		return callback('入库数量超出布卷重量');
+	}
+	if (submitinfo.juanhao.length =='') {
+		return callback('请扫描布卷');
+	}
+	var state = getState();
+    var creater=state.account;
+	var arr={
+		'rukuDate':submitinfo.rukuDate,
+		'kuweiId':submitinfo.kuweiId,
+		'kuquId':submitinfo.kuquId,
+		'juanhao':submitinfo.juanhao,
+		'weight':submitinfo.weight,
+		'memo':submitinfo.memo,
+        'creater':creater,
+		'token':config.token
+	};
+	var data=request('POST',arr,config.apimethod.HuiliaoSaveByJuan);
+	if(!data.success){
+		return false;
+	}
+	mui.toast(data.msg);
+    location.reload();
+}
 
 
 
