@@ -1,5 +1,5 @@
 var config = {
- 	server: 'http://192.168.1.3/ranzheng_donghui_new/api.php',
+ 	server: 'http://192.168.1.10/ranzheng_donghui_new/api.php',
  	token:'608e870bde43bbb273807f5bee766f8f',
 	apiname: 'topapi', //系统配置的api名称
 	pagesize: 20, // 分页组件每页显示数量
@@ -31,6 +31,7 @@ var config = {
 		XsCkSaveByGang:'Cangku.XsCkSaveByGang',//销售出库--按缸
 		getHuiData:'Cangku.getHuiData',//通过卷号获取出要回料的布卷信息
 		HuiliaoSaveByJuan:'Cangku.HuiliaoSaveByJuan',//面料回料入库
+		getMlDataByKuquId:'Cangku.getMlDataByKuquId',//通过库获取布卷信息
 		
 	}
 }

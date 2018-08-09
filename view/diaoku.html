@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+			</button>
+			<h1 class="mui-title">库存盘点</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+			    <div class="mui-input-row">
+					<!--<label>备注</label>-->
+					<input type="hidden" class="mui-input-clear" name="kuquId" id="kuquId">
+				</div>
+				<div id="kuweiInfo">
+					<ul class="mui-table-view">
+						
+					</ul>
+				</div>
+			    <div class="mui-button-row">
+			        <button type="button" class="mui-btn mui-btn-primary" id="submit">模拟扫码</button>
+			    </div>
+			</form>
+		</div>
+		<script src="../config.js"></script>
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript" src="../js/mui.picker.js"></script>
+		<script type="text/javascript" src="../js/mui.poppicker.js"></script>
+		<script src="../js/scaner.js"></script>
+		<script type="text/javascript" src="../js/jquery.1.9.1.js"></script>
+		<script src="../js/app.js"></script>
+		<script>
+			mui.init();
+			var table = document.body.querySelector('.mui-table-view');
+			document.querySelector("#submit").addEventListener("tap",function(){
+				var result='1';
+				var kuquId=document.getElementById('kuquId').value;
+				var kuquIdArr=kuquId.split(',');
+				if(kuquId!=''){
+					mui.alert('只能扫描单一库位');
+					return ;
+				}
+				var data=getMlDataByKuquId(result);
+				document.getElementById('kuquId').value=result;
+	            doCodeData(data);
+			 });
+			mui.plusReady(function(){
+//				initMe();
+				plus.key.addEventListener('keyup',function(e){
+					console.log("keyup: "+e.keyCode);
+					if(e.keyCode==224){
+						var result='1';
+						var kuquId=document.getElementById('kuquId').value;
+						var kuquIdArr=kuquId.split(',');
+						if(kuquId!=''){
+							mui.alert('只能扫描单一库位');
+							return ;
+						}
+						var data=getMlDataByKuquId(result);
+						document.getElementById('kuquId').value=result;
+			            doCodeData(data);
+					}
+					if(e.keyCode==4){
+						mui.back();
+					}
+					if(e.keyCode==5){
+//						mui.trigger(document.getElementById('submit'),'tap');
+					}
+				},false);
+			});
+			function doCodeData(data)
+			{
+				mui.each(data, function(index, item) {
+					var str = '';
+					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
+					str += '<div class="mui-slider-handle">缸号:'+item.ganghao+',卷号:'+item.rollNo+',条码：'+item.code+'</div>';
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.id=item.id;
+					li.innerHTML = str;
+					table.appendChild(li);
+				});
+			}
+		</script>
+	</body>	
+</html>

@@ -608,7 +608,21 @@ var HuiliaoSaveByJuan=function(submitinfo,callback){
 	mui.toast(data.msg);
     location.reload();
 }
-
+/**
+ * 通过库区条码查找当前布卷
+ * @param {String} codeId
+ */
+var getMlDataByKuquId=function(codeId){
+	var arr={
+		kuquId:codeId,
+		token:config.token
+	};
+	var data=request('POST',arr,config.apimethod.getMlDataByKuquId);
+	if(!data.success){
+		return;
+	}
+	return data.params;
+}
 
 
 
