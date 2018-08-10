@@ -1,18 +1,4 @@
-/**
- * 因为扫码枪版本不一样，按键监听也不一样，需要区分不同的安卓版本来区分不同的扫码按键
- * 安卓 5.1 keyCode=104
- * 安卓4.4.2 keyCode=224
- */
-var device_version=function(){
-	var version=plus.os.version;
-	var listenKey;
-	if(version=='5.1'){
-		listenKey=104;
-	}else if(version=='4.4.2'){
-		listenKey=224;
-	}
-	return listenKey;
-}
+
 var login=function(loginInfo, callback){
 	callback = callback || mui.noop;
 	loginInfo = loginInfo || {};
@@ -111,10 +97,17 @@ var getMlCangku=function(){
 	return data.params;
 }
 //获取指定仓库对应的库区
-var getMlKuwei=function(cangkuId){
-	var arr={'token':config.token,cangkuId:cangkuId};
-	var data=request('POST',arr,config.apimethod.getMlKuwei);
-	return data.params;
+var getMlKuwei=function(cangkuId,page,searchKey){
+	var arr={
+		pageSize:config.pagesize,
+		page:page,
+		cangkuId:cangkuId,
+		token:config.token,
+		key:searchKey,
+		method:config.apimethod.getMlKuwei
+	};
+	var data=requestData('GET',arr);
+	return data;
 }
 //通过条码值获取布卷信息
 var getMlData=function(codeId){
