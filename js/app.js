@@ -296,7 +296,7 @@ var getClothInfo=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
 	var data=request('POST',arr,config.apimethod.getClothInfo);
 	if(!data.success){
-		return ;
+		return false;
 	}
 	return data.params;
 }
