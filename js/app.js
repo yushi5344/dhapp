@@ -385,21 +385,11 @@ var ACChukuSaveByGang=function(submitInfo,callback){
 	mui.toast(data.msg);
 	mui.back();
 }
-//初始化扫码监听事件
-var initMe=function ()
-{
-    plus.Scaner.initMe("");
-}
-//获取条码值
-var getCode=function ()
-{
-    return code=plus.Scaner.getCode("");
-}
 var getGangData=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
 	var data=request('POST',arr,config.apimethod.getGangData);
 	if(!data.success){
-		return ;
+		return false;
 	}
 	return data.params;
 }

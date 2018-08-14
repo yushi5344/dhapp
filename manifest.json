@@ -149,7 +149,8 @@
 					"view/buInfo.html",
 					"view/juanyan-gang.html",
 					"view/XsCk-gang.html",
-					"view/AClistAdd-gang.html"
+					"view/AClistAdd-gang.html",
+					"view/huiliao.html"
 				],
 				"priority": 0
 			},
@@ -202,7 +203,8 @@
 			"view/juanyan-gang.html": {
 				"resources": [],
 				"refer": [
-					"index.html"
+					"index.html",
+					"view/kuquSelect.html"
 				],
 				"priority": 0
 			},
