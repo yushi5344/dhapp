@@ -114,7 +114,7 @@ var getMlData=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
 	var data=request('POST',arr,config.apimethod.getMlData);
 	if(!data.success){
-		return ;
+		return false;
 	}
 	return data.params;
 }
@@ -129,7 +129,7 @@ var checkSaveByJuan=function(submitinfo,callback){
 	if (submitinfo.kuquId.length =='') {
 		return callback('请选择库位');
 	}
-	if (submitinfo.juanhao.length =='') {
+	if (submitinfo.checkId.length =='') {
 		return callback('请扫描布卷');
 	}
 	var state = getState();
@@ -138,7 +138,7 @@ var checkSaveByJuan=function(submitinfo,callback){
 		'rukuDate':submitinfo.rukuDate,
 		'kuweiId':submitinfo.kuweiId,
 		'kuquId':submitinfo.kuquId,
-		'juanhao':submitinfo.juanhao,
+		'checkId':submitinfo.checkId,
 		'memo':submitinfo.memo,
         'creater':creater,
 		'token':config.token
