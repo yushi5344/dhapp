@@ -223,6 +223,14 @@
 					"index.html"
 				],
 				"priority": 0
+			},
+			"view/huiliao.html": {
+				"resources": [],
+				"refer": [
+					"view/kuquSelect.html",
+					"index.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

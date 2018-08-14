@@ -548,7 +548,7 @@ var getHuiData=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
 	var data=request('POST',arr,config.apimethod.getHuiData);
 	if(!data.success){
-		return ;
+		return false;
 	}
 	return data.params;
 }
@@ -569,7 +569,7 @@ var HuiliaoSaveByJuan=function(submitinfo,callback){
 	if (parseFloat(submitinfo.weight)>parseFloat(submitinfo.weights)) {
 		return callback('入库数量超出布卷重量');
 	}
-	if (submitinfo.juanhao.length =='') {
+	if (submitinfo.checkId.length =='') {
 		return callback('请扫描布卷');
 	}
 	var state = getState();
@@ -578,7 +578,7 @@ var HuiliaoSaveByJuan=function(submitinfo,callback){
 		'rukuDate':submitinfo.rukuDate,
 		'kuweiId':submitinfo.kuweiId,
 		'kuquId':submitinfo.kuquId,
-		'juanhao':submitinfo.juanhao,
+		'checkId':submitinfo.checkId,
 		'weight':submitinfo.weight,
 		'memo':submitinfo.memo,
         'creater':creater,
