@@ -150,7 +150,8 @@
 					"view/juanyan-gang.html",
 					"view/XsCk-gang.html",
 					"view/AClistAdd-gang.html",
-					"view/huiliao.html"
+					"view/huiliao.html",
+					"view/diaoku.html"
 				],
 				"priority": 0
 			},
@@ -229,6 +230,13 @@
 				"refer": [
 					"view/kuquSelect.html",
 					"index.html"
+				],
+				"priority": 0
+			},
+			"view/diaoku.html": {
+				"resources": [],
+				"refer": [
+					"view/diaoku.html"
 				],
 				"priority": 0
 			}

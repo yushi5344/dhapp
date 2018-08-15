@@ -26,16 +26,18 @@
 		<div class="mui-content">
 			<form class="mui-input-group">
 			    <div class="mui-input-row">
-					<!--<label>备注</label>-->
-					<input type="hidden" class="mui-input-clear" name="kuquId" id="kuquId">
+					<label>条码</label>
+					<input type="text" class="mui-input-clear" name="juanhao" id="juanhao">
+					
 				</div>
 				<div id="kuweiInfo">
+					<input type="hidden" class="mui-input-clear"  id="kuquId">
 					<ul class="mui-table-view">
 						
 					</ul>
 				</div>
 			    <div class="mui-button-row">
-			        <button type="button" class="mui-btn mui-btn-primary" id="submit">模拟扫码</button>
+			        <!--<button type="button" class="mui-btn mui-btn-primary" id="submit">模拟扫码</button>-->
 			    </div>
 			</form>
 		</div>
@@ -49,42 +51,28 @@
 		<script>
 			mui.init();
 			var table = document.body.querySelector('.mui-table-view');
-			document.querySelector("#submit").addEventListener("tap",function(){
-				var result='1';
-				var kuquId=document.getElementById('kuquId').value;
-				var kuquIdArr=kuquId.split(',');
-				if(kuquId!=''){
-					mui.alert('只能扫描单一库位');
-					return ;
-				}
-				var data=getMlDataByKuquId(result);
-				document.getElementById('kuquId').value=result;
-	            doCodeData(data);
-			 });
-			mui.plusReady(function(){
-//				initMe();
-				plus.key.addEventListener('keyup',function(e){
-					console.log("keyup: "+e.keyCode);
-					if(e.keyCode==224){
-						var result='1';
-						var kuquId=document.getElementById('kuquId').value;
-						var kuquIdArr=kuquId.split(',');
-						if(kuquId!=''){
-							mui.alert('只能扫描单一库位');
-							return ;
-						}
-						var data=getMlDataByKuquId(result);
+			 document.getElementById('juanhao').addEventListener('keypress',function(e){
+	        	if(e.keyCode==13){
+	        		var kuquId=document.getElementById('kuquId').value;
+					var kuquIdArr=kuquId.split(',');
+					if(kuquId!=''){
+						mui.alert('只能扫描单一库位');
+						return ;
+					}
+	        		var juanhao=this.value.substr(0,this.value.length-1);
+					var juanArr=juanhao.split(',');
+					var len=juanArr.length;
+					var result=juanArr[len-1];
+					console.log(result);
+					this.value=result+',';
+					var data=getMlDataByKuquId(result);
+					if(data){
 						document.getElementById('kuquId').value=result;
-			            doCodeData(data);
+						console.log(result);
+		            	doCodeData(data);
 					}
-					if(e.keyCode==4){
-						mui.back();
-					}
-					if(e.keyCode==5){
-//						mui.trigger(document.getElementById('submit'),'tap');
-					}
-				},false);
-			});
+	        	}
+		   });
 			function doCodeData(data)
 			{
 				mui.each(data, function(index, item) {

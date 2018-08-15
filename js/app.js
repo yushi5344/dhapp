@@ -602,7 +602,7 @@ var getMlDataByKuquId=function(codeId){
 	};
 	var data=request('POST',arr,config.apimethod.getMlDataByKuquId);
 	if(!data.success){
-		return;
+		return false;
 	}
 	return data.params;
 }
