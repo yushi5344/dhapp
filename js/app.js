@@ -201,7 +201,7 @@ var getMlDataChu=function(codeId){
 	};
 	var data=request('POST',arr,config.apimethod.getMlDataChu);
 	if(!data.success){
-		return;
+		return false;
 	}
 	return data.params;
 }
@@ -331,7 +331,7 @@ var ACChukuSaveByJuan=function(submitInfo,callback){
 	if (submitInfo.kuweiId.length =='') {
 		return callback('请选择仓库');
 	}
-	if (submitInfo.juanhao.length =='') {
+	if (submitInfo.madanId.length =='') {
 		return callback('请扫描布卷');
 	}
 	var state = getState();
@@ -342,7 +342,7 @@ var ACChukuSaveByJuan=function(submitInfo,callback){
 		'kuweiIdru':submitInfo.kuweiIdru,
 		'planId':submitInfo.planId,
 		'productId':submitInfo.productId,
-		'juanhao':submitInfo.juanhao,
+		'madanId':submitInfo.madanId,
 		'memo':submitInfo.memo,
 		'creater':creater,
 		'token':config.token

@@ -62,19 +62,14 @@
 					document.activeElement.blur();
 
 				});
-				var replodpage = mui.preload({
-					url: 'confirmChuAC.html',
-					id: 'confirmChuAC'
-				});
+				
 				mui('.mui-table-view').on('tap', 'li', function() {
 					var productId = this.getAttribute('productId');
 					var planId = this.getAttribute('planId');
-					mui.fire(replodpage, 'comfirmPageAC', {
+					clicked('_www/view/confirmChuAC.html',
+					{
 						productId:productId,
 						planId:planId
-					});
-					mui.openWindow({
-						id: 'confirmChuAC'
 					});
 				});
 			});
