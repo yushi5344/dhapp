@@ -60,6 +60,11 @@
 			    	<input type="text" class="mui-input-clear"  id="ganghao" value="">
 			    </div>
 			    <div class="mui-input-row">
+					<label>条码</label>
+					<input type="text" class="mui-input-clear" name="juanhao" id="juanhao" value=""/>
+					
+				</div>
+			    <div class="mui-input-row">
 			    	<label for="">出库信息</label>
 			    </div>
 			    <div id="chukuData">
@@ -69,8 +74,7 @@
 			    </div>
 			   
 			    <div class="mui-button-row">
-			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认入库</button>
-			        <button type="button" class="mui-btn mui-btn-primary" id="submit1" >模拟</button>
+			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认出库</button>
 			    </div>
 			</form>
 		</div>
@@ -115,9 +119,25 @@
 	            	document.getElementById('shipping').value=items[0].id;
 	          	});
 	      	});
-	       document.querySelector("#submit1").addEventListener("tap",function(){
-	       		
-	       });
+	       document.getElementById('juanhao').addEventListener('keypress',function(e){
+	        	if(e.keyCode==13){
+	        		var juanhao=this.value.substr(0,this.value.length-1);
+					var juanArr=juanhao.split(',');
+					var len=juanArr.length;
+					var result=juanArr[len-1];
+					juanArr.pop();
+					var index=$.inArray(result,juanArr);
+					if(index>=0){
+						mui.alert('该布卷已扫描');
+						this.value=juanArr.join(',')+',';
+						return ;
+					}
+					var data=getMlDataChuByGang(result);
+					if(data){
+						doCodeData(data);
+					}
+	        	}
+		    });
 	        document.querySelector("#submit").addEventListener("tap",function(){
 	         	var chukuDate=document.getElementById('chukuDate').value;
 	         	var kuweiId=document.getElementById('kuweiId').value;
@@ -150,21 +170,6 @@
 				document.getElementById('orderId').value=orderId;
 				document.getElementById('productId').value=productId;
 				document.getElementById('clientId').value=clientId;
-	            console.log(orderId);
-				plus.key.addEventListener('keyup',function(e){
-					console.log("keydown: "+e.keyCode);
-					if(e.keyCode==224){
-						var result=getCode();
-						var data=getMlDataChuByGang(result);
-			            doCodeData(data);
-					}
-					if(e.keyCode==4){
-						mui.back();
-					}
-					if(e.keyCode==5){
-						mui.trigger(document.getElementById('submit'),'tap');
-					}
-				},false);
 			});
 			function doCodeData(data){
 				mui.each(data, function(index, item) {
