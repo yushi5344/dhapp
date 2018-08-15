@@ -151,7 +151,8 @@
 					"view/XsCk-gang.html",
 					"view/AClistAdd-gang.html",
 					"view/huiliao.html",
-					"view/diaoku.html"
+					"view/diaoku.html",
+					"view/XsCk.html"
 				],
 				"priority": 0
 			},
@@ -237,6 +238,14 @@
 				"resources": [],
 				"refer": [
 					"view/diaoku.html"
+				],
+				"priority": 0
+			},
+			"view/XsCk.html": {
+				"resources": [],
+				"refer": [
+					"view/confirmXsCk.html",
+					"index.html"
 				],
 				"priority": 0
 			}

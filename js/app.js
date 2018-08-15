@@ -469,7 +469,7 @@ var XsCkSaveByJuan=function(submitInfo,callback){
 	if (submitInfo.ship_area.length =='') {
 		return callback('请选择发货区域');
 	}
-	if (submitInfo.juanhao.length =='') {
+	if (submitInfo.madanId.length =='') {
 		return callback('请扫描布卷');
 	}
 	var state = getState();
@@ -479,7 +479,7 @@ var XsCkSaveByJuan=function(submitInfo,callback){
 		'kuweiId':submitInfo.kuweiId,
 		'shipping':submitInfo.shipping,
 		'productId':submitInfo.productId,
-		'juanhao':submitInfo.juanhao,
+		'madanId':submitInfo.madanId,
 		'memo':submitInfo.memo,
 		'corp_name':submitInfo.corp_name,
 		'ship_area':submitInfo.ship_area,

@@ -57,19 +57,22 @@
 			    	<input type="text" class="mui-input-clear" name="memo" id="memo">
 			    	<input type="text" class="mui-input-clear"  id="orderId" value="">
 			    	<input type="text" class="mui-input-clear"  id="clientId" value="">
-			    	<input type="text" class="mui-input-clear"  id="juanhao" value="12209-1,12209-2,12209-15,12209-18,">
+			    	<!--<input type="text" class="mui-input-clear"  id="juanhao" value="12209-1,12209-2,12209-15,12209-18,">-->
 			    </div>
+			    <div class="mui-input-row">
+					<label>条码</label>
+					<input type="text" class="mui-input-clear" name="juanhao" id="juanhao" value=""/>
+					<input type="hidden"  name="madanId" id="madanId" value=""/>
+				</div>
 			    <div class="mui-input-row">
 			    	<label for="">出库信息</label>
 			    </div>
 			    <div id="chukuData">
-			    	<div class="mui-input-row rukumingxi" id="ML04190(19048)">缸号:<span class="ganghao">ML04190(19048)</span>,长度:<span class="length">59.90</span>,重量:<span class="weight">18.75</span>,卷数:<span class="juan">1</span></div>
-			    	<div class="mui-input-row rukumingxi" id="19049">缸号:<span class="ganghao">19049</span>,长度:<span class="length">56.00</span>,重量:<span class="weight">18.05</span>,卷数:<span class="juan">1</span></div>
+			    	
 			    </div>
 			   
 			    <div class="mui-button-row">
-			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认入库</button>
-			        <button type="button" class="mui-btn mui-btn-primary" id="submit1" >模拟</button>
+			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认出库</button>
 			    </div>
 			</form>
 		</div>
@@ -77,7 +80,6 @@
 		<script src="../js/mui.js"></script>
 		<script type="text/javascript" src="../js/mui.picker.js"></script>
 		<script type="text/javascript" src="../js/mui.poppicker.js"></script>
-		<script src="../js/scaner.js"></script>
 		<script type="text/javascript" src="../js/jquery.1.9.1.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
@@ -113,9 +115,33 @@
 	            	document.getElementById('shipping').value=items[0].id;
 	          	});
 	      	});
-	       document.querySelector("#submit1").addEventListener("tap",function(){
-	       		
-	       });
+	       document.getElementById('juanhao').addEventListener('keypress',function(e){
+	        	if(e.keyCode==13){
+	        		console.log(this.value);
+	        		var juanhao=this.value.substr(0,this.value.length-1);
+					var juanArr=juanhao.split(',');
+					var len=juanArr.length;
+					var result=juanArr[len-1];
+					juanArr.pop();
+					var index=$.inArray(result,juanArr);
+					if(index>=0){
+						mui.alert('该布卷已扫描');
+						this.value=juanArr.join(',')+',';
+						return ;
+					}
+					var data=getMlDataChu(result);
+					if(data){
+						if(data.productId !=document.getElementById('productId').value){
+			        		mui.alert('产品编码不一致');
+			        		this.value=juanArr.join(',')+',';
+			        		return ;
+			        	}
+			            doCodeData(data);
+					}else{
+						this.value=juanArr.join(',')+',';
+					}
+	        	}
+		    });
 	        document.querySelector("#submit").addEventListener("tap",function(){
 	         	var chukuDate=document.getElementById('chukuDate').value;
 	         	var kuweiId=document.getElementById('kuweiId').value;
@@ -124,10 +150,10 @@
 	         	var ship_area=document.getElementById('ship_area').value;
 	         	var productId=document.getElementById('productId').value;
 	         	var clientId=document.getElementById('clientId').value;
-	         	var juanhao=document.getElementById('juanhao').value;
+	         	var madanId=document.getElementById('madanId').value;
 	         	var memo=document.getElementById('memo').value;
 	         	var orderId=document.getElementById('orderId').value;
-	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,shipping:shipping,juanhao:juanhao,corp_name:corp_name,ship_area:ship_area,productId:productId,clientId:clientId,memo:memo,orderId:orderId};
+	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,shipping:shipping,madanId:madanId,corp_name:corp_name,ship_area:ship_area,productId:productId,clientId:clientId,memo:memo,orderId:orderId};
 	         	XsCkSaveByJuan(submitinfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);
@@ -143,37 +169,11 @@
 				document.getElementById('orderId').value=orderId;
 				document.getElementById('productId').value=productId;
 				document.getElementById('clientId').value=clientId;
-	            console.log(orderId);
-				plus.key.addEventListener('keyup',function(e){
-					console.log("keydown: "+e.keyCode);
-					if(e.keyCode==224){
-						var result=getCode();
-						var juanhao=document.getElementById('juanhao').value;
-						var juanArr=juanhao.split(',');
-						var index=$.inArray(result,juanArr);
-						if(index>=0){
-							mui.alert('该布卷已扫描');
-							return;
-						}
-						var data=getMlDataChu(result);
-						if(data.productId !=document.getElementById('productId').value){
-			        		mui.alert('产品编码不一致');
-			        		return ;
-			        	}
-			            document.getElementById('juanhao').value=juanhao+result+',';
-			            doCodeData(data);
-			            console.log(document.getElementById('juanhao').value);
-					}
-					if(e.keyCode==4){
-						mui.back();
-					}
-					if(e.keyCode==5){
-						mui.trigger(document.getElementById('submit'),'tap');
-					}
-				},false);
 			});
 			function doCodeData(data){
 				console.log(JSON.stringify(data));
+				var madanId=document.getElementById('madanId').value;
+				document.getElementById('madanId').value=madanId+data.id+',';
 				//判断之前的扫描结果有没有同缸号的，
 				var id=document.getElementById(data.ganghao);
 				var str='';
