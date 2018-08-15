@@ -66,21 +66,16 @@
 					document.activeElement.blur();
 
 				});
-				var replodpage = mui.preload({
-					url: 'confirmChu.html',
-					id: 'confirmChu'
-				});
+				
 				mui('.mui-table-view').on('tap', 'li', function() {
 					var productId = this.getAttribute('productId');
 					var planId = this.getAttribute('planId');
 					var orderCode = this.getAttribute('orderCode');
-					mui.fire(replodpage, 'comfirmPage', {
+					clicked('_www/view/confirmChu.html',
+					{
 						productId:productId,
 						planId:planId,
 						orderCode:orderCode
-					});
-					mui.openWindow({
-						id: 'confirmChu'
 					});
 				});
 			});
