@@ -217,7 +217,7 @@ var getMlDataChuByGang=function(codeId){
 	};
 	var data=request('POST',arr,config.apimethod.getMlDataChuByGang);
 	if(!data.success){
-		return;
+		return false;
 	}
 	return data.params;
 }
