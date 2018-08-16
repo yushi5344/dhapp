@@ -22,23 +22,73 @@
 			<button id='setting' class=" mui-pull-right mui-btn-link"><span class="mui-icon mui-icon-settings"></span></button>
 		</header>
 		<div class="mui-content">
-			<!--<div class="mui-content-padded">-->
-				<ul class="mui-table-view">
-				<li class="mui-table-view-divider">仓库入库</li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/juanyan.html">　卷验入库--按卷</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/juanyan-gang.html">　卷验入库--按缸</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/huiliao.html">　回料入库</a></li>
-				<li class="mui-table-view-divider">仓库出库</li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/AClistAdd.html">　AC、DY单领用出库--按卷</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/AClistAdd-gang.html">　AC、DY单领用出库--按缸</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/BDlistAdd.html">　BD单领用出库--按卷</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/BDlistAdd-gang.html">　BD单领用出库--按缸</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/XsCk.html">　销售出库--按卷</a></li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/XsCk-gang.html">　销售出库--按缸</a></li>
-				<li class="mui-table-view-divider">布卷信息</li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/buInfo.html">　布卷信息查询</a></li>
-				<li class="mui-table-view-divider">库存管理</li>
-				<li class="mui-table-view-cell"><a class="mui-navigate-right" href="view/diaoku.html">　库存盘点</a></li>
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/juanyan.html">
+						<span class=" mui-icon mui-icon-plus"><span class="mui-badge" style="background-color:blue;">卷</span></span>
+						<div class="mui-media-body">卷验入库</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/juanyan-gang.html">
+						<span class="mui-icon mui-icon-plus-filled"><span class="mui-badge">缸</span></span>
+						<div class="mui-media-body">卷验入库</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/huiliao.html">
+						<span class="mui-icon mui-icon-refresh"></span>
+						<div class="mui-media-body">回料入库</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/AClistAdd.html">
+						<span class="mui-icon mui-icon-minus"><span class="mui-badge"  style="background-color:blue;">卷</span></span>
+						<div class="mui-media-body">AC领用</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/AClistAdd-gang.html">
+						<span class="mui-icon mui-icon-minus-filled"><span class="mui-badge">缸</span></span>
+						<div class="mui-media-body">AC领用</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/BDlistAdd.html">
+						<span class="mui-icon mui-icon-list"><span class="mui-badge" style="background-color: blue;">卷</span></span>
+						<div class="mui-media-body">BD领用</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/BDlistAdd-gang.html">
+						<span class="mui-icon mui-icon-bars"><span class="mui-badge">缸</span></span>
+						<div class="mui-media-body">BD领用</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/XsCk.html">
+						<span class="mui-icon mui-icon-navigate"><span class="mui-badge" style="background-color: blue;">卷</span></span>
+						<div class="mui-media-body">销售出库</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/XsCk-gang.html">
+						<span class="mui-icon mui-icon-paperplane"><span class="mui-badge">缸</span></span>
+						<div class="mui-media-body">销售出库</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/buInfo.html">
+						<span class="mui-icon mui-icon-info-filled"></span>
+						<div class="mui-media-body">布卷信息</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4">
+					<a href="view/diaoku.html">
+						<span class="mui-icon mui-icon-gear"></span>
+						<div class="mui-media-body">库存盘点</div>
+					</a>
+				</li>
 			</ul>
 			<!--</div>-->
 			
@@ -50,15 +100,15 @@
 			mui.init();
 			mui.plusReady(function(){
 				var state = getState();
-//				if(!state.account){
-//					mui.openWindow({
-//						url:'view/login.html',
-//						id:'login',
-//						show:{
-//					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
-//					    },
-//					});
-//				}
+				if(!state.account){
+					mui.openWindow({
+						url:'view/login.html',
+						id:'login',
+						show:{
+					      autoShow:true,//页面loaded事件发生后自动显示，默认为true
+					    },
+					});
+				}
 				//设置
 				var settingButton = document.getElementById('setting');
 				settingButton.addEventListener('tap', function(event) {
