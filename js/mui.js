@@ -7,7 +7,7 @@
  * MUI核心JS
  * @type _L4.$|Function
  */
-var api_token='608e870bde43bbb273807f5bee766f8f';
+
 
 var mui = (function(document, undefined) {
 	var readyRE = /complete|loaded|interactive/;

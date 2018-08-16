@@ -124,136 +124,351 @@
                 "android": {
                     "mdpi": "", /*普通屏启动图片，分辨率：240x282*/
                     "ldpi": "", /*大屏启动图片，分辨率：320x442*/
-                    "hdpi": "", /*高分屏启动图片，分辨率：480x762*/
-                    "xhdpi": "", /*720P高分屏启动图片，分辨率：720x1242*/
-                    "xxhdpi": ""/*1080P高分屏启动图片，分辨率：1080x1882*/
+                    "hdpi": "C:/Users/yushi/Desktop/splash1480x762.png", /*高分屏启动图片，分辨率：480x762*/
+                    "xhdpi": "C:/Users/yushi/Desktop/splash1720x1242.png", /*720P高分屏启动图片，分辨率：720x1242*/
+                    "xxhdpi": "C:/Users/yushi/Desktop/splash11080x1882.png"/*1080P高分屏启动图片，分辨率：1080x1882*/
                 }
             }
         },"ads":{"rp":false,"splash":false,"push":false},"adid":""
     },
 	"dependencies": {
-		"pages": {
-			"index.html": {
-				"resources": [],
-				"refer": [
-					"view/setting.html",
-					"view/login.html",
-					"view/juanyan.html",
-					"view/BDlistAdd.html",
-					"view/AClistAdd.html",
-					"view/buInfo.html",
-					"view/juanyan-gang.html",
-					"view/XsCk-gang.html",
-					"view/AClistAdd-gang.html",
-					"view/huiliao.html",
-					"view/diaoku.html",
-					"view/XsCk.html"
-				],
-				"priority": 0
-			},
-			"view/setting.html": {
-				"resources": [],
-				"refer": [
-					"view/login.html"
-				],
-				"priority": 0
-			},
-			"view/login.html": {
-				"resources": [],
-				"refer": [
-					"index.html"
-				],
-				"priority": 0
-			},
-			"view/juanyan.html": {
-				"resources": [],
-				"refer": [
-					"index.html",
-					"view/kuquSelect.html"
-				],
-				"priority": 0
-			},
-			"view/BDlistAdd.html": {
-				"resources": [],
-				"refer": [
-					"index.html",
-					"view/confirmChu.html"
-				],
-				"priority": 0
-			},
-			"view/AClistAdd.html": {
-				"resources": [],
-				"refer": [
-					"view/confirmChu.html",
-					"index.html",
-					"view/confirmChuAC.html"
-				],
-				"priority": 0
-			},
-			"view/buInfo.html": {
-				"resources": [],
-				"refer": [
-					"index.html"
-				],
-				"priority": 0
-			},
-			"view/juanyan-gang.html": {
-				"resources": [],
-				"refer": [
-					"index.html",
-					"view/kuquSelect.html"
-				],
-				"priority": 0
-			},
-			"view/XsCk-gang.html": {
-				"resources": [],
-				"refer": [
-					"view/confirmXsCk-gang.html",
-					"index.html"
-				],
-				"priority": 0
-			},
-			"view/AClistAdd-gang.html": {
-				"resources": [],
-				"refer": [
-					"view/confirmChuAC-gang.html",
-					"index.html"
-				],
-				"priority": 0
-			},
-			"view/huiliao.html": {
-				"resources": [],
-				"refer": [
-					"view/kuquSelect.html",
-					"index.html"
-				],
-				"priority": 0
-			},
-			"view/diaoku.html": {
-				"resources": [],
-				"refer": [
-					"view/diaoku.html"
-				],
-				"priority": 0
-			},
-			"view/XsCk.html": {
-				"resources": [],
-				"refer": [
-					"view/confirmXsCk.html",
-					"index.html"
-				],
-				"priority": 0
-			}
-		},
-		"idle": {
-			"resources": [
-				"js/app.js",
-				"css/mui.min.css",
-				"css/style.css",
-				"js/mui.js",
-				"config.js",
-				"README.md"
-			]
-		}
+	  "pages": {
+	    "index.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/setting.html",
+	        "view/login.html",
+	        "view/juanyan.html",
+	        "view/BDlistAdd.html",
+	        "view/AClistAdd.html",
+	        "view/buInfo.html",
+	        "view/juanyan-gang.html",
+	        "view/XsCk-gang.html",
+	        "view/AClistAdd-gang.html",
+	        "view/huiliao.html",
+	        "view/diaoku.html",
+	        "view/XsCk.html",
+	        "view/BDlistAdd-gang.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/setting.html": {
+	      "resources": [
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js",
+	        "css/mui.min.css",
+	        "fonts/mui.ttf"
+	      ],
+	      "refer": [
+	        "view/login.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/login.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/juanyan.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "index.html",
+	        "view/kuquSelect.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/BDlistAdd.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "index.html",
+	        "view/confirmChu.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/AClistAdd.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/confirmChu.html",
+	        "index.html",
+	        "view/confirmChuAC.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/buInfo.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/juanyan-gang.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "index.html",
+	        "view/kuquSelect.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/XsCk-gang.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/confirmXsCk-gang.html",
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/AClistAdd-gang.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/confirmChuAC-gang.html",
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/huiliao.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/kuquSelect.html",
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/diaoku.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/diaoku.html",
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/XsCk.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "view/confirmXsCk.html",
+	        "index.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/BDlistAdd-gang.html": {
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "refer": [
+	        "index.html",
+	        "view/confirmChuBD-gang.html"
+	      ],
+	      "priority": 0
+	    },
+	    "view/kuquSelect.html": {
+	      "href": "view/kuquSelect.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "config.js",
+	        "js/mui.js",
+	        "js/app.js"
+	      ],
+	      "priority": 2
+	    },
+	    "view/confirmChuAC.html": {
+	      "href": "view/confirmChuAC.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "priority": 5
+	    },
+	    "view/confirmChuAC-gang.html": {
+	      "href": "view/confirmChuAC-gang.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "priority": 6
+	    },
+	    "view/confirmChu.html": {
+	      "href": "view/confirmChu.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "priority": 7
+	    },
+	    "view/confirmChuBD-gang.html": {
+	      "href": "view/confirmChuBD-gang.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "priority": 8
+	    },
+	    "view/confirmXsCk.html": {
+	      "href": "view/confirmXsCk.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "priority": 9
+	    },
+	    "view/confirmXsCk-gang.html": {
+	      "href": "view/confirmXsCk-gang.html",
+	      "resources": [
+	        "css/mui.min.css",
+	        "fonts/mui.ttf",
+	        "css/mui.picker.css",
+	        "css/mui.poppicker.css",
+	        "config.js",
+	        "js/mui.js",
+	        "js/mui.picker.js",
+	        "js/mui.poppicker.js",
+	        "js/jquery.1.9.1.js",
+	        "js/app.js"
+	      ],
+	      "priority": 10
+	    }
+	  },
+	  "idle": {
+	    "resources": [
+	      "package.json",
+	      "README.md"
+	    ]
+	  }
 	}
 }
