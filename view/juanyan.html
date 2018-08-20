@@ -40,7 +40,7 @@
 			    </div>
 			    <div class="mui-input-row">
 			        <label>库位</label>
-			        <input type="text" class="mui-input-clear" id="kuquIds" placeholder="请选择库位" readonly="readonly">
+			        <input type="text" class="mui-input-clear" id="kuquIds" placeholder="请选择库位" >
 			        <input type="hidden" name="kuquId" id="kuquId" />
 					
 			    </div>
@@ -103,15 +103,14 @@
 	        	
 
 		    });
-	        document.querySelector("#kuquIds").addEventListener("tap",function(){
-	        	var cangkuId=document.getElementById('kuweiId').value;
-	        	if(!cangkuId){
-	        		mui.toast('请先选择仓库');
-	        		return false;
-	        	}
-				clicked('_www/view/kuquSelect.html',{
-					cangkuId:cangkuId
-				});
+	        document.querySelector("#kuquIds").addEventListener("keypress",function(e){
+        		if(e.keyCode==13){
+        			var kuquId=this.value.substr(0,this.value.length-1);
+        			var data=getMlKuweiById(kuquId);
+        			this.value = data.kuweiName;
+            		document.getElementById("kuquId").value = data.id;
+            		document.activeElement.blur();
+        		}
 	        });
 	        window.addEventListener("changekuweiId", function(e) {
                 document.getElementById("kuquIds").value = e.detail.kuweiName;
@@ -132,7 +131,7 @@
 				});
 			 });
 			mui.plusReady(function(){
-				
+				document.getElementById('rukuDate').value=getNowFormatDate();
 			});
 			function doCodeData(data)
 			{

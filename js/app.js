@@ -90,6 +90,23 @@ var setState = function(state) {
 	state = state || {};
 	localStorage.setItem('$state', JSON.stringify(state));
 };
+
+var getNowFormatDate= function() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
 //获取面料仓库列表
 var getMlCangku=function(){
 	var arr={'token':config.token};
@@ -109,6 +126,11 @@ var getMlKuwei=function(cangkuId,page,searchKey){
 	var data=requestData('GET',arr);
 	return data;
 }
+var getMlKuweiById=function(kuquId){
+	var arr={'token':config.token,kuquId:kuquId};
+	var data=request('POST',arr,config.apimethod.getMlKuweiById);
+	return data.params;
+}
 //通过条码值获取布卷信息
 var getMlData=function(codeId){
 	var arr={'token':config.token,codeId:codeId};
@@ -120,6 +142,7 @@ var getMlData=function(codeId){
 }
 //卷验按卷入库提交
 var checkSaveByJuan=function(submitinfo,callback){
+	console.log(JSON.stringify(submitinfo));
 	if (submitinfo.rukuDate.length =='') {
 		return callback('请选择入库日期');
 	}
