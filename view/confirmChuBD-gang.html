@@ -8,6 +8,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/mui.picker.css" />
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/selectKuwei.css"/>
 		<style>
 			ul {
 				font-size: 14px;
@@ -65,6 +66,12 @@
 			        
 			    </div>
 			</form>
+			<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+			    <!-- 可选择菜单 -->
+			    <ul class="mui-table-view-tip">
+			    
+			    </ul>
+			</div>
 		</div>
 		<script src="../config.js"></script>
 		<script src="../js/mui.js"></script>
@@ -77,13 +84,6 @@
 			listenDelete();
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
-			document.querySelector("#cangkuId").addEventListener("tap",function(){
-				picker.setData(getMlCangku());
-		  		picker.show(function(items){
-	            	document.getElementById('cangkuId').value=items[0].value;
-	            	document.getElementById('kuweiId').value=items[0].id;
-	          	});
-	        });
 	       document.getElementById('juanhao').addEventListener('keypress',function(e){
 	        	if(e.keyCode==13){
 	        		var juanhao=this.value.substr(0,this.value.length-1);
@@ -130,6 +130,9 @@
 				document.getElementById('productId').value=productId;
 	            document.getElementById('planId').value=planId;
 	            document.getElementById('orderCode').value=orderCode;
+	            initdate('chukuDate');
+				selectCangku();
+				showPopOver();
 			});
 			function doCodeData(data){
 				mui.each(data, function(index, item) {

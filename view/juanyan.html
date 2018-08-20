@@ -8,6 +8,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/mui.picker.css" />
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/selectKuwei.css"/>
 		<style>
 			ul {
 				font-size: 14px;
@@ -16,21 +17,7 @@
 			.rukumingxi{
 				margin: 1rem 0 1rem 0.9rem;
 			}
-			.mui-input-row .mui-icon-plus-filled {
-			    font-size: 24px;
-			    top: 8px;
-			}
-			.mui-input-row .mui-icon-plus-filled {
-			    font-size: 20px;
-			    position: absolute;
-			    z-index: 1;
-			    top: 10px;
-			    right: 10px;
-			    width: 38px;
-			    height: 38px;
-			    text-align: center;
-			    color: blue;
-			}
+			
 		</style>
 	</head>
 
@@ -88,16 +75,7 @@
 		<script>
 			mui.init();
 			var picker = new mui.PopPicker();
-			document.querySelector("#cangkuId").addEventListener("tap",function(){
-				picker.setData(getMlCangku());
-		  		picker.show(function(items){
-	            	document.getElementById('cangkuId').value=items[0].value;
-	            	document.getElementById('kuweiId').value=items[0].id;
-	          	});
-	        });
 	        document.getElementById('juanhao').addEventListener('keypress',function(e){
-//	        	console.log(e.keyCode);  
-//				console.log(this.value);
 	        	if(e.keyCode==13){
 	        		var juanhao=this.value.substr(0,this.value.length-1);
 					var juanArr=juanhao.split(',');
@@ -118,33 +96,6 @@
 	        	
 
 		    });
-		    document.querySelector('#mui-icon-plus-filled').addEventListener('tap',function(){
-		    	var cangkuId=document.getElementById('kuweiId').value;
-	        	if(!cangkuId){
-	        		mui.toast('请先选择仓库');
-	        		return false;
-	        	}
-				clicked('_www/view/kuquSelect.html',{
-					cangkuId:cangkuId
-				});
-		    });
-		     window.addEventListener("changekuweiId", function(e) {
-                document.getElementById("kuquIds").value = e.detail.kuweiName;
-                document.getElementById("kuquId").value = e.detail.kuquId;
-           });
-	        document.querySelector("#kuquIds").addEventListener("keypress",function(e){
-        		if(e.keyCode==13){
-        			var kuquId=this.value.substr(0,this.value.length-1);
-        			var data=getMlKuweiById(kuquId);
-        			this.value = data.kuweiName;
-            		document.getElementById("kuquId").value = data.id;
-            		document.activeElement.blur();
-        		}
-	        });
-	        window.addEventListener("changekuweiId", function(e) {
-                document.getElementById("kuquIds").value = e.detail.kuweiName;
-                document.getElementById("kuquId").value = e.detail.kuquId;
-            });
 			 document.querySelector("#submit").addEventListener("tap",function(){
 				var rukuDate=document.getElementById('rukuDate').value;
 				var kuweiId=document.getElementById('kuweiId').value;
@@ -160,7 +111,10 @@
 				});
 			 });
 			mui.plusReady(function(){
-				document.getElementById('rukuDate').value=getNowFormatDate();
+				initdate('rukuDate');
+				selectCangku();
+				selectKuwei();
+				showKuweiName();
 			});
 			function doCodeData(data)
 			{

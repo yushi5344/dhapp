@@ -637,11 +637,61 @@ var getMlDataByKuquId=function(codeId){
 	}
 	return data.params;
 }
-
-
-
-
-
+var initdate=function(selector){
+	document.getElementById(selector).value=getNowFormatDate();
+}
+var selectKuwei=function(){
+	document.querySelector('#mui-icon-plus-filled').addEventListener('tap',function(){
+    	var cangkuId=document.getElementById('kuweiId').value;
+    	if(!cangkuId){
+    		mui.toast('请先选择仓库');
+    		return false;
+    	}
+		clicked('_www/view/kuquSelect.html',{
+			cangkuId:cangkuId
+		});
+    });
+    
+     window.addEventListener("changekuweiId", function(e) {
+        document.getElementById("kuquIds").value = e.detail.kuweiName;
+        document.getElementById("kuquId").value = e.detail.kuquId;
+   	});
+}
+var selectCangku=function(){
+	document.querySelector("#cangkuId").addEventListener("tap",function(){
+		picker.setData(getMlCangku());
+  		picker.show(function(items){
+        	document.getElementById('cangkuId').value=items[0].value;
+        	document.getElementById('kuweiId').value=items[0].id;
+      	});
+    });
+}
+var showKuweiName=function(){
+	 document.querySelector("#kuquIds").addEventListener("keypress",function(e){
+		if(e.keyCode==13){
+			var kuquId=this.value.substr(0,this.value.length-1);
+			var data=getMlKuweiById(kuquId);
+			this.value = data.kuweiName;
+    		document.getElementById("kuquId").value = data.id;
+    		document.activeElement.blur();
+		}
+    });
+}
+var showPopOver=function(){
+	document.querySelector('#productId').addEventListener('tap',function(){
+	 	var proCode=this.value;
+	 	if(proCode){
+	 		var data=getProductByproCode(proCode);
+	 		var liStr='';
+			liStr+='<li class="mui-table-view-cell-tip">名称:'+data.proName+'</li>';
+			liStr+='<li class="mui-table-view-cell-tip">色号:'+data.color+'</li>';
+			liStr+='<li class="mui-table-view-cell-tip">门幅:'+data.menfu+'</li>';
+			liStr+='<li class="mui-table-view-cell-tip">克重:'+data.kezhong+'</li>';
+			$('.mui-table-view-tip').html(liStr);
+	 		mui('#sheet1').popover('toggle');
+	 	}
+	});
+}
 
 
 

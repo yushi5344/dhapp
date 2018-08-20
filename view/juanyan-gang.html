@@ -8,6 +8,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/mui.picker.css" />
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/selectKuwei.css"/>
 		<style>
 			ul {
 				font-size: 14px;
@@ -40,8 +41,9 @@
 			    </div>
 			    <div class="mui-input-row">
 			        <label>库位</label>
-			        <input type="text" class="mui-input-clear" id="kuquIds" placeholder="请选择库位" readonly="readonly">
+			        <input type="text" class="" id="kuquIds" placeholder="请选择库位">
 			        <input type="hidden" name="kuquId" id="kuquId" />
+			        <span class="mui-icon mui-icon-plus-filled" id="mui-icon-plus-filled"></span>
 					<input type="hidden" name="ganghao" id="ganghao" value=""/>
 			    </div>
 				<div class="mui-input-row">
@@ -76,28 +78,6 @@
 			listenDelete();
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
-			document.querySelector("#cangkuId").addEventListener("tap",function(){
-				picker.setData(getMlCangku());
-		  		picker.show(function(items){
-	            	document.getElementById('cangkuId').value=items[0].value;
-	            	document.getElementById('kuweiId').value=items[0].id;
-	          	});
-	        });
-	        
-	        document.querySelector("#kuquIds").addEventListener("tap",function(){
-	        	var cangkuId=document.getElementById('kuweiId').value;
-	        	if(!cangkuId){
-	        		mui.toast('请先选择仓库');
-	        		return false;
-	        	}
-				clicked('_www/view/kuquSelect.html',{
-					cangkuId:cangkuId
-				});
-	        });
-	        window.addEventListener("changekuweiId", function(e) {
-                document.getElementById("kuquIds").value = e.detail.kuweiName;
-                document.getElementById("kuquId").value = e.detail.kuquId;
-           });
             document.getElementById('juanhao').addEventListener('keypress',function(e){
 	        	if(e.keyCode==13){
 	        		var juanhao=this.value.substr(0,this.value.length-1);
@@ -137,10 +117,10 @@
 				});
 			 });
 			mui.plusReady(function(){
-				//initMe();
-				plus.key.addEventListener('keyup',function(e){
-					
-				},false);
+				initdate('rukuDate');
+				selectCangku();
+				selectKuwei();
+				showKuweiName();
 			});
 			function doCodeData(data)
 			{

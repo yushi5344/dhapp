@@ -8,6 +8,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/mui.picker.css" />
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/selectKuwei.css"/>
 		<style>
 			ul {
 				font-size: 14px;
@@ -75,6 +76,12 @@
 			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认出库</button>
 			    </div>
 			</form>
+			<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+			    <!-- 可选择菜单 -->
+			    <ul class="mui-table-view-tip">
+			    
+			    </ul>
+			</div>
 		</div>
 		<script src="../config.js"></script>
 		<script src="../js/mui.js"></script>
@@ -86,13 +93,6 @@
 			mui.init();
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
-			document.querySelector("#cangkuId").addEventListener("tap",function(){
-				picker.setData(getMlCangku());
-		  		picker.show(function(items){
-	            	document.getElementById('cangkuId').value=items[0].value;
-	            	document.getElementById('kuweiId').value=items[0].id;
-	          	});
-	      	});
 	      	document.querySelector("#corp_names").addEventListener("tap",function(){
 				picker.setData(getDelComp());
 		  		picker.show(function(items){
@@ -169,6 +169,9 @@
 				document.getElementById('orderId').value=orderId;
 				document.getElementById('productId').value=productId;
 				document.getElementById('clientId').value=clientId;
+				initdate('chukuDate');
+				selectCangku();
+				showPopOver();
 			});
 			function doCodeData(data){
 				console.log(JSON.stringify(data));
