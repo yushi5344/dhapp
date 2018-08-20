@@ -8,6 +8,37 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../css/mui.picker.css" />
 		<link rel="stylesheet" type="text/css" href="../css/mui.poppicker.css"/>
+		<style type="text/css">
+			.mui-table-view-tip
+			{
+			    position: relative;
+			
+			    padding-left: 0;
+			
+			    list-style: none;
+			
+			    background-color: #fff;
+			    
+			    margin: 0.3rem 0.5rem;
+			    
+			    border-radius: 0.5rem;
+			}
+			.mui-table-view-cell-tip
+			{
+			    position: relative;
+			
+			    overflow: hidden;
+			
+			    padding: 11px 15px;
+			
+			    -webkit-touch-callout: none;
+			    
+			    text-align: center;
+			    
+			    color:#007aff;
+			    border-bottom: 1px solid #ccc;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -58,6 +89,12 @@
 			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认出库</button>
 			    </div>
 			</form>
+			<div id="sheet1" class="mui-popover mui-popover-bottom mui-popover-action ">
+			    <!-- 可选择菜单 -->
+			    <ul class="mui-table-view-tip">
+			    
+			    </ul>
+			</div>
 		</div>
 		<script src="../config.js"></script>
 		<script src="../js/mui.js"></script>
@@ -126,6 +163,14 @@
 					}
 				});
 	         });
+	         document.querySelector('#productId').addEventListener('tap',function(){
+	         	var proCode=this.value;
+	         	if(proCode){
+	         		var data=getProductByproCode(proCode);
+	         		doPopoverData(data);
+	         		mui('#sheet1').popover('toggle');
+	         	}
+	         });
 			mui.plusReady(function(){
 				var productId = plus.webview.currentWebview().productId;
 				var planId = plus.webview.currentWebview().planId;
@@ -154,6 +199,15 @@
 					console.log(str);
 					$('#chukuData').append(str);
 				}
+			}
+			
+			function doPopoverData(data){
+				var liStr='';
+				liStr+='<li class="mui-table-view-cell-tip">名称:'+data.proName+'</li>';
+				liStr+='<li class="mui-table-view-cell-tip">色号:'+data.color+'</li>';
+				liStr+='<li class="mui-table-view-cell-tip">门幅:'+data.menfu+'</li>';
+				liStr+='<li class="mui-table-view-cell-tip">克重:'+data.kezhong+'</li>';
+				$('.mui-table-view-tip').html(liStr);
 			}
 		</script>
 		

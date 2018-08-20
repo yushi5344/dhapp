@@ -131,6 +131,14 @@ var getMlKuweiById=function(kuquId){
 	var data=request('POST',arr,config.apimethod.getMlKuweiById);
 	return data.params;
 }
+var getProductByproCode=function(proCode){
+	var arr={'token':config.token,proCode:proCode};
+	var data=request('POST',arr,config.apimethod.getProductByproCode);
+	if(!data.success){
+		return false;
+	}
+	return data.params;
+}
 //通过条码值获取布卷信息
 var getMlData=function(codeId){
 	var arr={'token':config.token,codeId:codeId};

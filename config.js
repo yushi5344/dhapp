@@ -33,5 +33,7 @@ var config = {
 		HuiliaoSaveByJuan:'Cangku.HuiliaoSaveByJuan',//面料回料入库
 		getMlDataByKuquId:'Cangku.getMlDataByKuquId',//通过库获取布卷信息
 		getMlKuweiById:"Cangku.getMlKuweiById",//根据库位id获取库位名称
+		getProductByproCode:"Cangku.getProductByproCode",//通过产品编码获取产品信息
+		
 	}
 }
