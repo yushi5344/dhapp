@@ -28,14 +28,18 @@
 		<div class="mui-content">
 			<form class="mui-input-group">
 			    
-				<div class="mui-input-row">
+				<!--<div class="mui-input-row">
 					<label>备注</label>
 					<input type="hidden" name="ganghao" id="ganghao" value=""/>
 					<input type="text" class="mui-input-clear" name="memo" id="memo">
+				</div>-->
+				<div class="mui-input-row">
+					<label>库位条码</label>
+					<input type="text" class="mui-input-clear" name="juanhao" id="juanhao" value=""/>
 				</div>
 				<div class="mui-input-row">
-					<label>条码</label>
-					<input type="text" class="mui-input-clear" name="juanhao" id="juanhao" value=""/>
+					<label>库位</label>
+					<input type="text" class="mui-input-clear" name="kuweiName" id="kuweiName" value="" readonly="readonly"/>
 				</div>
 			    <div class="mui-input-row">
 			    	<label>布卷信息</label>
@@ -77,6 +81,7 @@
 					if(data){
 						doCodeData(data);
 					}
+					document.activeElement.blur();
 	        	}
 		    });
 			 document.querySelector("#submit").addEventListener("tap",function(){
@@ -90,6 +95,7 @@
 			});
 			function doCodeData(data)
 			{
+				document.getElementById('kuweiName').value=data[0].kuqu;
 				mui.each(data, function(index, item) {
 					var str = '';
 					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
