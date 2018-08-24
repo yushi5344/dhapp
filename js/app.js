@@ -131,6 +131,21 @@ var getMlKuweiById=function(kuquId){
 	var data=request('POST',arr,config.apimethod.getMlKuweiById);
 	return data.params;
 }
+/**
+ * 获取当前用户最后出入库的仓库id
+ * @param {Object} kuquId
+ */
+var getMlCangkuByUser=function(kind){
+	var state = getState();
+    var creater=state.account;
+	var arr={'token':config.token,'kind':kind,'creater':creater};
+	var data=request('POST',arr,config.apimethod.getMlCangkuByUser);
+	if(data.params!=null){
+		document.getElementById('cangkuId').value=data.params.kuweiName;
+        document.getElementById('kuweiId').value=data.params.id;
+	}
+	
+}
 var getProductByproCode=function(proCode){
 	var arr={'token':config.token,proCode:proCode};
 	var data=request('POST',arr,config.apimethod.getProductByproCode);

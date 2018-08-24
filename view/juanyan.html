@@ -115,6 +115,7 @@
 				selectCangku();
 				selectKuwei();
 				showKuweiName();
+				cangkuData=getMlCangkuByUser('验布入库');
 			});
 			function doCodeData(data)
 			{
@@ -135,7 +136,7 @@
 					eleweight.innerHTML=weight;
 					elejuan.innerHTML=juan;
 				}else{
-					str='<div class="mui-input-row rukumingxi" id="'+data.c5+'">缸号:<span class="ganghao">'+data.c5+'</span>,长度:<span class="length">'+data.length+'</span>,重量:<span class="weight">'+data.weight+'</span>,卷数:<span class="juan">1</span></div>';
+					str='<div class=" rukumingxi" id="'+data.c5+'">缸号:<span class="ganghao">'+data.c5+'</span>,长度:<span class="length">'+data.length+'</span>,重量:<span class="weight">'+data.weight+'</span>,卷数:<span class="juan">1</span>,色号:<span class="color">'+data.color+'</span>,克重:<span class="kezhong">'+data.kezhong+'</span>,门幅:<span class="menfu">'+data.menfu+'</span></div>';
 					$('#rukuData').append(str);
 				}
 				console.log(document.getElementById('checkId').value);
