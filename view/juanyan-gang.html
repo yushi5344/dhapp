@@ -14,7 +14,7 @@
 				font-size: 14px;
 				color: #8f8f94;
 			}
-			.rukumingxi{
+			.rukumingxi,.sumInfo{
 				margin: 1rem 0 1rem 0.9rem;
 			}
 		</style>
@@ -62,6 +62,11 @@
 						
 					</ul>
 				</div>
+				<div class="mui-input-row">
+					<div class="sumInfo">
+						入库重量 <span id="cangkuWeight">0</span> ,入库长度 <span id="cagnkulength">0</span> ,卷数  <span id="cangkujuan">0</span>
+					</div>
+			    </div>
 			    <div class="mui-button-row">
 			        <button type="button" class="mui-btn mui-btn-primary" id="submit">确认入库</button>
 			    </div>
@@ -75,7 +80,7 @@
 		<script src="../js/app.js"></script>
 		<script>
 			mui.init();
-			listenDelete();
+			listenDelete(calSum);
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
             document.getElementById('juanhao').addEventListener('keypress',function(e){
@@ -139,13 +144,28 @@
 					}
 					var str = '';
 					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
-					str += '<div class="mui-slider-handle">条码：'+item.orderId+'-'+item.checkId+',缸号:'+item.c5+',卷号:'+item.checkId+',长度：'+item.length+'，重量：'+item.weight+'</div>';
+					str += '<div class="mui-slider-handle">条码：'+item.orderId+'-'+item.checkId+',缸号:'+item.c5+',卷号:'+item.checkId+',长度：<span class="length">'+item.length+'</span>，重量：<span class="weight">'+item.weight+'</span></div>';
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.id=item.id;
 					li.innerHTML = str;
 					table.appendChild(li);
 				});
+				calSum();
+			}
+			function calSum(){
+				var handle=table.getElementsByClassName('mui-slider-handle');
+				var sumlength=0;
+				var sumweight=0;
+				for (var i=0;i<handle.length;i++) {
+					var lilength=handle[i].getElementsByClassName('length')[0].innerHTML;
+					sumlength=parseFloat(lilength)+sumlength;
+					var liweight=handle[i].getElementsByClassName('weight')[0].innerHTML;
+					sumweight=parseFloat(liweight)+sumweight;
+				}
+				document.getElementById('cangkuWeight').innerHTML=sumweight.toFixed(2);
+				document.getElementById('cagnkulength').innerHTML=sumlength.toFixed(2);
+				document.getElementById('cangkujuan').innerHTML=handle.length;
 			}
 		</script>
 	</body>

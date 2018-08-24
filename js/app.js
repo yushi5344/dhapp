@@ -442,13 +442,17 @@ var getGangData=function(codeId){
 /**
  * li标签左滑删除
  */
-var listenDelete=function(){
+var listenDelete=function(callback){
+	var callback = callback || null;
 	mui(".mui-table-view").on('tap','.mui-btn-red',function(){
     	var btnArray = ['是', '否'];
         var li = this.parentNode.parentNode;
         mui.confirm("确定删除?", "提示", btnArray, function (e) {
             if (e.index == 0) {
                 li.parentNode.removeChild(li);
+                if (callback !=null){
+                	return callback();
+                }
             }else {
                 mui.swipeoutClose(li);
             }
