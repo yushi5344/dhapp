@@ -7,7 +7,7 @@ var config = {
 	apimethod: { //接口method集合
 		logout: 'Login.loginOut', //退出
 		login:'Login.loginIn',//登录
-		getMlCangku:'Cangku.getMlCangku',//面料仓库列表
+		getMlCangku:'Cangku.getMlCangku',//面料仓库列表 
 		getMlKuwei:'Cangku.getMlKuwei',//所选仓库对应的库位
 		getMlData:'Cangku.getMlData',//通过条码值获取布卷信息
 		checkSaveByJuan:'Cangku.checkSaveByJuan',//面料按卷入库
@@ -35,6 +35,8 @@ var config = {
 		getMlKuweiById:"Cangku.getMlKuweiById",//根据库位id获取库位名称
 		getProductByproCode:"Cangku.getProductByproCode",//通过产品编码获取产品信息
 		getMlCangkuByUser:"Cangku.getMlCangkuByUser",//获取当前用户最后出入库的仓库id
+		getRcKuWeiByPlanId:"Cangku.getRcKuWeiByPlanId",//通过计划主表id获取染色仓库
+		
 		
 	}
 }

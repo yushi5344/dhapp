@@ -493,6 +493,17 @@ var getDelAddress=function(orderId){
 	return data.params;
 }
 /**
+ * 通过计划主表id获取染色仓库
+ * @param {String} planId
+ */
+var getRcKuWeiByPlanId=function(planId){
+	var arr={'token':config.token,'planId':planId};
+	var data=request('POST',arr,config.apimethod.getRcKuWeiByPlanId);
+	if(data.params!=null){
+		return data.params;
+	}
+}
+/**
  * 获取发货区域
  */
 var getShipArea=function(){

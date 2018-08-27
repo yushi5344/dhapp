@@ -135,6 +135,11 @@
 	            initdate('chukuDate');
 	            selectCangku();
 	            showPopOver();
+	            var RcKuwei=getRcKuWeiByPlanId(planId);
+	            if(RcKuwei){
+	            	document.getElementById('kuweiIdrus').value=RcKuwei.kuweiName;
+	            	document.getElementById('kuweiIdru').value=RcKuwei.id;
+	            }
 			});
 			function doCodeData(data){
 				console.log(JSON.stringify(data));
