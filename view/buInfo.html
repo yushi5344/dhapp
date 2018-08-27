@@ -29,8 +29,11 @@
 				
 				<li class="mui-table-view-cell" >单号：<span id="orderCode"></span> </li>
 				<li class="mui-table-view-cell" >缸号： <span id="ganghao"></span></li>
-				<li class="mui-table-view-cell" >色号： <span id="color"></span></li>
 				<li class="mui-table-view-cell" >编码：<span id="productId"></span></li>
+				<li class="mui-table-view-cell" >色号： <span id="color"></span></li>
+				<li class="mui-table-view-cell" >品名：<span id="proName"></span></li>
+				<li class="mui-table-view-cell" >磨绒：<span id="milling"></span></li>
+				<li class="mui-table-view-cell" >克重：<span id="kezhong"></span></li>
 				<li class="mui-table-view-cell" >检验日期：<span id="checkTime"></span> </li>
 			</ul>
 		</div>
@@ -61,6 +64,9 @@
 				document.getElementById('color').innerHTML=data.color;
 				document.getElementById('productId').innerHTML=data.productId;
 				document.getElementById('checkTime').innerHTML=data.checkTime;
+				document.getElementById('proName').innerHTML=data.proName;
+				document.getElementById('milling').innerHTML=data.milling;
+				document.getElementById('kezhong').innerHTML=data.kezhong;
 			}
 		</script>
 	</body>
