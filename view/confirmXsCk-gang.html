@@ -14,13 +14,19 @@
 				font-size: 14px;
 				color: #8f8f94;
 			}
+			.mui-checkbox.mui-left input[type=checkbox]{
+				left: 0px; 
+			}
+			.mui-checkbox.mui-left label{
+				padding: 0 0.3rem 0 2rem;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">扫码出库--按卷</h1>
+		    <h1 class="mui-title">销售出库--按缸</h1>
 		</header>
 		<div class="mui-content">
 			<form class="mui-input-group">
@@ -73,7 +79,11 @@
 						
 					</ul>
 			    </div>
-			   
+			   <div class="mui-input-row1">
+					<div class="sumInfo">
+						入库重量 <span id="cangkuWeight">0</span> ,入库长度 <span id="cagnkulength">0</span> ,卷数  <span id="cangkujuan">0</span>
+					</div>
+			    </div>
 			    <div class="mui-button-row">
 			        <button type="button" class="mui-btn mui-btn-primary" id="submit" >确认出库</button>
 			    </div>
@@ -93,9 +103,13 @@
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			listenDelete();
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
+			mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
+				setTimeout(function(){
+					calSum();
+				},300);
+			});
 	      	document.querySelector("#corp_names").addEventListener("tap",function(){
 				picker.setData(getDelComp());
 		  		picker.show(function(items){
@@ -145,10 +159,12 @@
 	         	var ship_area=document.getElementById('ship_area').value;
 	         	var productId=document.getElementById('productId').value;
 	         	var clientId=document.getElementById('clientId').value;
-	         	var li=table.getElementsByClassName('mui-table-view-cell');
+	         	var li=table.getElementsByTagName('input');
 				var madanIdArr=[];
 				for (var i=0;i<li.length;i++) {
-					madanIdArr.push(li[i].getAttribute('id'));
+					if(li[i].checked){
+						madanIdArr.push(li[i].value);
+					}
 				}
 				var madanId=madanIdArr.join(',');
 	         	var memo=document.getElementById('memo').value;
@@ -192,15 +208,35 @@
 						document.getElementById('ganghao').value=ganghao+result+',';
 					}
 					var str = '';
-					str += '<div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>';
-					str += '<div class="mui-slider-handle">缸号:'+item.ganghao+',卷号:'+item.rollNo+',长度：'+item.cntL+'，重量：'+item.cnt+'</div>';
+					str += '<div class="mui-checkbox mui-left">';
+					str += '<label class="label_class">缸号:'+item.ganghao+',卷号:'+item.rollNo+',长度：<span class="length">'+item.cntL+'</span>，重量：<span class="weight">'+item.cnt+'</span></label>';
+					str +='<input name="select_juan" value="'+item.id+'" type="checkbox" ></div>';
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
 					li.id=item.id;
 					li.innerHTML = str;
 					table.appendChild(li);
 				});
-				console.log(document.getElementById('ganghao').value);
+				calSum();
+			}
+			function calSum(){
+				var handle=table.getElementsByTagName('input');
+				var sumlength=0;
+				var sumweight=0;
+				var sumjuan=0;
+				for (var i=0;i<handle.length;i++) {
+					if(handle[i].checked){
+						sumjuan++;
+						var prevNode=handle[i].parentNode;
+						var lilength=prevNode.getElementsByClassName('length')[0].innerHTML;
+						sumlength=parseFloat(lilength)+sumlength;
+						var liweight=prevNode.getElementsByClassName('weight')[0].innerHTML;
+						sumweight=parseFloat(liweight)+sumweight;
+					}
+				}
+				document.getElementById('cangkuWeight').innerHTML=sumweight.toFixed(2);
+				document.getElementById('cagnkulength').innerHTML=sumlength.toFixed(2);
+				document.getElementById('cangkujuan').innerHTML=sumjuan;
 			}
 		</script>
 		
