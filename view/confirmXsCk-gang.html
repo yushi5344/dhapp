@@ -71,8 +71,9 @@
 					<input type="text" class="mui-input-clear" name="juanhao" id="juanhao" value=""/>
 					
 				</div>
-			    <div class="mui-input-row">
-			    	<label for="">出库信息</label>
+			     <div class="mui-input-row mui-checkbox" id="checkAll">
+			    	<label for="">出库信息　　　    　　　　全选</label>
+			    	<input name="select_all" value="" type="checkbox" >
 			    </div>
 			    <div id="chukuData">
 			    	<ul class="mui-table-view">
@@ -106,6 +107,28 @@
 			var picker = new mui.PopPicker();
 			var table = document.body.querySelector('.mui-table-view');
 			mui(".mui-table-view").on('tap','.mui-table-view-cell',function(){
+				setTimeout(function(){
+					calSum();
+				},300);
+			});
+			document.getElementById('checkAll').addEventListener('tap',function(e){
+				var select_all=this.parentNode.select_all;
+				var handle=table.getElementsByTagName('input');
+				if(select_all.checked){
+					//全不选
+					for (var i=0;i<handle.length;i++) {
+						if(handle[i].checked){
+							handle[i].checked=false;
+						}
+					}
+				}else{
+					//全选
+					for (var i=0;i<handle.length;i++) {
+						if(!handle[i].checked){
+							handle[i].checked=true;
+						}
+					}
+				}
 				setTimeout(function(){
 					calSum();
 				},300);
@@ -233,6 +256,11 @@
 						var liweight=prevNode.getElementsByClassName('weight')[0].innerHTML;
 						sumweight=parseFloat(liweight)+sumweight;
 					}
+				}
+				if(sumjuan==handle.length){
+					document.getElementsByName('select_all')[0].checked=true;
+				}else{
+					document.getElementsByName('select_all')[0].checked=false;
 				}
 				document.getElementById('cangkuWeight').innerHTML=sumweight.toFixed(2);
 				document.getElementById('cagnkulength').innerHTML=sumlength.toFixed(2);
