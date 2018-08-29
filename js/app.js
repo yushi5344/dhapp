@@ -1,4 +1,36 @@
+document.addEventListener("plusready", onPlusReady, false);
 
+function onPlusReady() {
+  document.addEventListener("netchange", onNetChange, false);
+}
+
+function onNetChange() {
+var nt = plus.networkinfo.getCurrentType();
+
+switch(nt) {
+    case plus.networkinfo.CONNECTION_ETHERNET:
+    case plus.networkinfo.CONNECTION_WIFI:
+      plus.nativeUI.toast("已连接到wifi网络", {
+        duration: 'long',
+        verticalAlign: 'center'
+      });
+      break;
+    case plus.networkinfo.CONNECTION_CELL2G:
+    case plus.networkinfo.CONNECTION_CELL3G:
+    case plus.networkinfo.CONNECTION_CELL4G:
+      plus.nativeUI.toast("您网络已切换到蜂窝网络，继续浏览会产生流量", {
+        duration: 'long', 
+        verticalAlign: 'center'
+      });
+      break;
+    default:
+      plus.nativeUI.toast("您的网络已断开", {
+        duration: 'long',
+        verticalAlign: 'center'
+      });
+      break;
+}
+}
 var login=function(loginInfo, callback){
 	callback = callback || mui.noop;
 	loginInfo = loginInfo || {};
@@ -33,6 +65,7 @@ var request=function(type,params,method){
 		url:config.server,
 		type:type,
 		dataType:'json',
+		timeout : 3000, //超时时间设置，单位毫秒
 		async : false,
 		data:{
 			params:params,
@@ -48,7 +81,9 @@ var request=function(type,params,method){
 			}
 		},
 		error:function(xhr,type,errorThrown){
-			console.log(xhr);
+			if(type=='timeout'){
+				mui.alert('请求超时');
+			}
 		}
 	});
 	return result;
@@ -59,6 +94,7 @@ var requestData=function(type,params){
 		url:config.server,
 		type:type,
 		dataType:'json',
+		timeout : 3000, //超时时间设置，单位毫秒
 		async : false,
 		data:params,
 		success:function(data){
@@ -71,7 +107,9 @@ var requestData=function(type,params){
 			}
 		},
 		error:function(xhr,type,errorThrown){
-			console.log(xhr);
+			if(type=='timeout'){
+				mui.alert('请求超时');
+			}
 		}
 	});
 	return result;
