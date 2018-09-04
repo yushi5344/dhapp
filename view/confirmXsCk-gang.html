@@ -54,6 +54,11 @@
 					<input type="text" class="mui-input-clear" id="corp_names"  readonly="readonly">
 					<input type="hidden" class="mui-input-clear" id="corp_name">
 				</div>
+				<div class="mui-input-row">
+					<label>物流单号</label>
+					<input type="text" class="mui-input-clear" id="logi_no" >
+				</div>
+				
 			     <div class="mui-input-row">
 			        <label>产品编码</label>
 			        <input type="text" class="mui-input-clear" id="productId"  readonly="readonly">
@@ -179,6 +184,7 @@
 	         	var kuweiId=document.getElementById('kuweiId').value;
 	         	var shipping=document.getElementById('shipping').value;
 	         	var corp_name=document.getElementById('corp_name').value;
+	         	var logi_no=document.getElementById('logi_no').value;
 	         	var ship_area=document.getElementById('ship_area').value;
 	         	var productId=document.getElementById('productId').value;
 	         	var clientId=document.getElementById('clientId').value;
@@ -192,7 +198,7 @@
 				var madanId=madanIdArr.join(',');
 	         	var memo=document.getElementById('memo').value;
 	         	var orderId=document.getElementById('orderId').value;
-	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,shipping:shipping,madanId:madanId,corp_name:corp_name,ship_area:ship_area,productId:productId,clientId:clientId,memo:memo,orderId:orderId};
+	         	var submitinfo={chukuDate:chukuDate,kuweiId:kuweiId,shipping:shipping,madanId:madanId,corp_name:corp_name,logi_no:logi_no,ship_area:ship_area,productId:productId,clientId:clientId,memo:memo,orderId:orderId};
 	         	XsCkSaveByGang(submitinfo, function(err) {
 					if (err) {
 						plus.nativeUI.toast(err);
