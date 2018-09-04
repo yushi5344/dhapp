@@ -219,14 +219,11 @@
 				showPopOver();
 			});
 			function doCodeData(data){
+				var product=document.getElementById('productId').value;
 				mui.each(data, function(index, item) {
+					var productId=item.productId;
 					if(!index){
 						var result=item.ganghao;
-						var productId=item.productId;
-						if(productId !=document.getElementById('productId').value){
-			        		mui.alert('产品编码不一致');
-			        		return false;
-			        	}
 						var ganghao=document.getElementById('ganghao').value;
 						var gangArr=ganghao.split(',');
 						var isset=$.inArray(result,gangArr);
@@ -236,6 +233,7 @@
 						}
 						document.getElementById('ganghao').value=ganghao+result+',';
 					}
+					if(productId !=product) return true;
 					var str = '';
 					str += '<div class="mui-checkbox mui-left">';
 					str += '<label class="label_class">缸号:'+item.ganghao+',卷号:'+item.rollNo+',长度：<span class="length">'+item.cntL+'</span>，重量：<span class="weight">'+item.cnt+'</span></label>';
