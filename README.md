@@ -23,7 +23,7 @@
 	|
 	|---index.html					入口文件
 	|
-	|---manifest.json				打包APP的必须文件,manifest.
+	|---manifest.json				打包APP的必须文件,manifest
 	|
 	|---package.json				项目其他信息
 	|
