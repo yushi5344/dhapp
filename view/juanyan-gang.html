@@ -58,7 +58,10 @@
 			    	<label>入库信息</label>
 			    </div>
 				<div id="rukuData">
-					<ul class="mui-table-view">
+					<ul class="mui-table-view order">
+						
+					</ul>
+					<ul class="mui-table-view detail">
 						
 					</ul>
 				</div>
@@ -82,7 +85,8 @@
 			mui.init();
 			listenDelete(calSum);
 			var picker = new mui.PopPicker();
-			var table = document.body.querySelector('.mui-table-view');
+			var table = document.body.querySelector('.detail');
+			var order = document.body.querySelector('.order');
             document.getElementById('juanhao').addEventListener('keypress',function(e){
 	        	if(e.keyCode==13){
 	        		var juanhao=this.value.substr(0,this.value.length-1);
@@ -129,8 +133,8 @@
 				cangkuData=getMlCangkuByUser('验布入库');
 			});
 			function doCodeData(data)
-			{
-				mui.each(data, function(index, item) {
+			{		
+				mui.each(data.data, function(index, item) {
 					if(!index){
 						var result=item.c5;
 						var ganghao=document.getElementById('ganghao').value;
@@ -152,6 +156,12 @@
 					table.appendChild(li);
 				});
 				calSum();
+				var li2 = document.createElement('li');
+				var str = '';
+				str += '<label>订单号 <span class="orderCode">'+data.orderCode+'</span> ,关联BD单号 <span id="orderBDCode">'+data.orderBDCode+'</span> ,需求量 <span id="orderCnt">'+data.orderCnt+'</span> ,领用数 <span id="Ccnt">'+data.Ccnt+'</span> ,关单状态 <span id="closeCode">'+data.closeCode+'</span></label>';
+				li2.className = 'mui-table-view-cell';
+				li2.innerHTML = str;
+				order.appendChild(li2);
 			}
 			function calSum(){
 				var handle=table.getElementsByClassName('mui-slider-handle');
@@ -166,7 +176,7 @@
 				document.getElementById('cangkuWeight').innerHTML=sumweight.toFixed(2);
 				document.getElementById('cagnkulength').innerHTML=sumlength.toFixed(2);
 				document.getElementById('cangkujuan').innerHTML=handle.length;
-			}
+			} 
 		</script>
 	</body>
 

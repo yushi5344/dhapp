@@ -112,7 +112,7 @@
 				mui.each(data, function(index, item) {
 					var str = '';
 					str += '<div class="mui-checkbox mui-left">';
-					str += '<label class="label_class">缸号:'+item.ganghao+',卷号:'+item.rollNo+',条码：'+item.code+'</label>';
+					str += '<label class="label_class">编码:'+item.proCode+',名称:'+item.proName+',色号:'+item.color+',门幅:'+item.menfu+',克重:'+item.kezhong+',缸号:'+item.ganghao+',卷号:'+item.rollNo+',条码：'+item.code+'</label>';
 					str +='<input name="select_juan" value="'+item.id+'" type="checkbox" checked></div>';
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';

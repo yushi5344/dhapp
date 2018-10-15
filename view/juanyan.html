@@ -132,11 +132,12 @@
 					var length=parseFloat(elelenth.innerHTML)+parseFloat(data.length);
 					var weight=parseFloat(eleweight.innerHTML)+parseFloat(data.weight);
 					var juan=parseInt(elejuan.innerHTML)+1;
+					length=length.toFixed(2);
 					elelenth.innerHTML=length;
 					eleweight.innerHTML=weight;
 					elejuan.innerHTML=juan;
 				}else{
-					str='<div class=" rukumingxi" id="'+data.c5+'">缸号:<span class="ganghao">'+data.c5+'</span>,长度:<span class="length">'+data.length+'</span>,重量:<span class="weight">'+data.weight+'</span>,卷数:<span class="juan">1</span>,色号:<span class="color">'+data.color+'</span>,克重:<span class="kezhong">'+data.kezhong+'</span>,门幅:<span class="menfu">'+data.menfu+'</span></div>';
+					str='<div class=" rukumingxi" id="'+data.c5+'">缸号:<span class="ganghao">'+data.c5+'</span>,订单号:<span class="orderCode">'+data.orderCode+'</span>,关联BD单号:<span class="orderBDCode">'+data.orderBDCode+'</span>,需求量:<span class="orderCnt">'+data.orderCnt+'</span>,领用数:<span class="Ccnt">'+data.Ccnt+'</span>,长度:<span class="length">'+data.length+'</span>,重量:<span class="weight">'+data.weight+'</span>,卷数:<span class="juan">1</span>,色号:<span class="color">'+data.color+'</span>,克重:<span class="kezhong">'+data.kezhong+'</span>,门幅:<span class="menfu">'+data.menfu+'</span>,关单状态:<span class="closeCode">'+data.closeCode+'</span></div>';
 					$('#rukuData').append(str);
 				}
 				console.log(document.getElementById('checkId').value);
